@@ -42,7 +42,7 @@ struct NewCityForm: View {
                     })
                 }
             }
-        }.accentColor(.primary)
+        }
     }
 }
 

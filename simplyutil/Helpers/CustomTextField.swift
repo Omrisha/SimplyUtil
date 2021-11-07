@@ -12,7 +12,7 @@ struct CustomTextField: View {
     var placeholder: String
     @State var text: String = ""
     var rates = ["USD", "ILS", "JPY", "EUR"]
-    @State private var selectedRate = "USD"
+    @State var selectedRate: String = "USD"
     
     var body: some View {
         HStack {

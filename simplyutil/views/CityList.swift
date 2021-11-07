@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CityList: View {
     var cities: [CityData]
+    @ObservedObject var rateStore = RateStore()
     
     let columns = [
         GridItem(.flexible(minimum: 150, maximum: 150)),
@@ -19,7 +20,7 @@ struct CityList: View {
         ScrollView {
             LazyVGrid(columns: columns, spacing: 20) {
                 ForEach(self.cities) { item in
-                    NavigationLink(destination: CityDetailView(city: item), label: {
+                    NavigationLink(destination: CityDetailView(rates: self.rateStore.rates, city: item), label: {
                         CityCard(cityData: item)
                     })
                 }

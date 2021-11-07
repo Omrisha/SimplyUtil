@@ -20,7 +20,7 @@ struct CityCard: View {
                 .frame(width: 45, height: 45)
             Spacer()
             HStack(alignment: .bottom) {
-                Text(String(format: "%.2f $", cityData.rate))
+                Text(cityData.rate)
                     .padding([.leading, .bottom], 10)
                 Spacer()
                 Text(String(format: "%.2f °", cityData.degrees))
