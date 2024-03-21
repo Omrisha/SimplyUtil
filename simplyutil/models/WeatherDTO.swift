@@ -13,7 +13,6 @@ struct WeatherDTO: Codable {
     
     enum CodingKeys: String, CodingKey {
         case current = "current"
-    }
-    
-    
+        case forecast = "forecast"
+    }    
 }

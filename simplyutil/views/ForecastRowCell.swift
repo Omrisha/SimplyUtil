@@ -9,31 +9,25 @@
 import SwiftUI
 
 struct ForecastRowCell: View {
-    var day: ForecastData
+    var days: ForecastsDTO
     
     var body: some View {
         HStack {
-            Image(day.symbol)
+            Image(days.day.condition.icon)
                 .resizable()
                 .frame(width: 64.0, height: 64.0)
                 .padding(.leading)
             Spacer()
-            Text(day.date)
+            Text(days.date)
                 .font(.title)
                 .fontWeight(.light)
             .foregroundColor(Color.primary)
             Spacer()
-            Text("\(day.degrees)°")
+            Text("\(days.day.averageTemperatureCelsius)°")
                 .font(.title)
                 .fontWeight(.semibold)
             .padding(.trailing)
             .foregroundColor(Color.primary)
         }
-    }
-}
-
-struct ForecastRowCell_Previews: PreviewProvider {
-    static var previews: some View {
-        ForecastRowCell(day: testData[0].forecast[0])
     }
 }

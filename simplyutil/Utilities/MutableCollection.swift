@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+extension MutableCollection {
+    mutating func move(
+        fromOffsets source: IndexSet,
+        toOffset destination: Int
+    )
+}

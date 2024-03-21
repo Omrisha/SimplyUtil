@@ -8,20 +8,61 @@
 import SwiftUI
 
 struct ForecastDTO: Codable {
-    let date: String
-    let temperatureCelsius: Double
-    let temperatureFarenheit: Double
-    let description: DescriptionDTO
+    let forecasts: [ForecastsDTO]
     
     enum CodingKeys: String, CodingKey {
-        case temperatureCelsius = "temp_c"
-        case temperatureFarenheit = "temp_f"
-        case weatherDescription = "weather"
-        case description = "condition"
-        case date = "last_updated"
+        case forecasts = "forecasts"
+    }
+}
+
+struct ForecastsDTO: Codable {
+    let date: String
+    let day: DayDTO
+    
+    enum CodingKeys: String, CodingKey {
+        case date = "date"
+        case day = "day"
+    }
+}
+
+struct DayDTO: Codable {
+    let maxTemperatureCelsius: Double
+    let maxTemperatureFarenheit: Double
+    let minTemperatureCelsius: Double
+    let minTemperatureFarenheit: Double
+    let averageTemperatureCelsius: Double
+    let averageTemperatureFarenheit: Double
+    let condition: ConditionDTO
+    
+    enum CodingKeys: String, CodingKey {
+        case maxTemperatureCelsius = "maxTemperatureCelsius"
+        case maxTemperatureFarenheit = "maxTemperatureFarenheit"
+        case minTemperatureCelsius = "minTemperatureCelsius"
+        case minTemperatureFarenheit = "minTemperatureFarenheit"
+        case averageTemperatureCelsius = "averageTemperatureCelsius"
+        case averageTemperatureFarenheit = "averageTemperatureFarenheit"
+        case condition = "condition"
     }
 }
 
 struct CurrentDTO: Codable{
+    let temperatureCelcius: Double
+    let temperatureFarenheit: Double
+    let condition: ConditionDTO
     
+    enum CodingKeys: String, CodingKey {
+        case temperatureCelcius = "temperatureCelcius"
+        case temperatureFarenheit = "temperatureFarenheit"
+        case condition = "condition"
+    }
+}
+
+struct ConditionDTO: Codable {
+    let icon: String
+    let text: String
+    
+    enum CodingKeys: String, CodingKey {
+        case icon = "icon"
+        case text = "text"
+    }
 }

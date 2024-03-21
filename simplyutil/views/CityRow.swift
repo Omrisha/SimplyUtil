@@ -25,20 +25,18 @@ struct CityRow: View {
                    RoundedRectangle(cornerRadius: 20)
                        .stroke(Color.teal)
                )
-                .frame(width: 100)
-                .padding(.trailing)
+               .multilineTextAlignment(.center)
+                .frame(width: 150)
+                .padding([.leading, .trailing])
                 .font(.largeTitle)
         }
-        .cornerRadius(20)
-            .padding()
-            .shadow(radius: 10.0, x: 20, y: 10)
     }
 }
 
 #Preview {
     do {
         let favorite = FavoriteEntity(id: 1, name: "Ramat Gan", threeLetterCode: "ISR", currency: "ILS", country: "Israel", isFavorite: true)
-        return CityCard(cityData: favorite)
+        return CityRow(cityData: favorite)
     } catch {
         fatalError("Failed to create model container")
     }

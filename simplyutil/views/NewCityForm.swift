@@ -6,53 +6,28 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct NewCityForm: View {
     @State var searchQuery: String = ""
-    @ObservedObject var cityFinder: CityFinder = CityFinder()
-    @Environment(\.colorScheme) var colorScheme
-    @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        self.cityFinder.search(searchQuery)
-        
         return NavigationView {
-            VStack {
-                SearchBar(text: $searchQuery)
-                List {
-                    Section {
-                        ForEach(self.cityFinder.results, id: \.self) { city in
-                            Button(action: {
-                                print(city)
-                            }, label: {
-                                Text(city)
-                            })
-                        }
-                    }
-                }.listStyle(GroupedListStyle())
-            }
-            .navigationTitle(Text("Search City").foregroundColor(Color.primary))
-                .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        dismiss()
-                    }, label: {
-                        Image(systemName: "arrow.backward")
-                    })
-                }
-            }
+            CitiesListView(sort: SortDescriptor(\CityEntity.name), searchText: searchQuery)
+                .searchable(text: $searchQuery)
         }
+        
     }
 }
 
-struct NewCityForm_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            NewCityForm()
-            
-            NewCityForm()
-                .preferredColorScheme(.dark)
-        }
+#Preview {
+    do {
+        let config = ModelConfiguration(isStoredInMemoryOnly: true)
+        let container = try ModelContainer(for: CityEntity.self, configurations: config)
+        let sampleObject = CityEntity(id: 1, name: "Rishon LeZion", threeLetterCode: "ISR", currency: "ILS", country: "Israel")
+        container.mainContext.insert(sampleObject)
+        return NewCityForm().modelContainer(container)
+    } catch {
+        fatalError("Failed to create model container")
     }
 }

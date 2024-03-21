@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+struct CityDTO: Identifiable, Codable {
+    var id: Int
+    let name: String
+    let threeLetterCode: String
+    let currency: String
+    let country: String
+}
