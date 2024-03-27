@@ -20,9 +20,29 @@ enum NetworkError: Error {
 class WebService {
     let api: GraphQLAPI = GraphQLAPI()
     
+    func fetchRates(currency: String) async -> RateDTO? {
+        let url = URL(string: "https://v6.exchangerate-api.com/v6/c04b66e4d1f1f147c60834b3/latest/USD")!
+        var request = URLRequest(url: url)
+        
+        request.httpMethod = "GET"
+        
+        do {
+            // Make the API call
+            let (data, _) = try await URLSession.shared.getData(from: request)
+            
+            // Attempt to parse into our `Output`
+            let result = try JSONDecoder().decode(RateDTO.self, from: data)
+            return result
+        } catch {
+            print("Invalid data")
+        }
+        
+        return nil
+    }
+    
     func fetchWeather(cityName: String) async -> WeatherDTO? {
         do {
-            let itemData: WeatherDTO = try await self.api.performOperation(GraphQLOperation.WEATHER)
+            let itemData: WeatherDTO = try await self.api.performOperation(GraphQLOperation.WEATHER(forCity: cityName))
             
             return itemData
         } catch {
@@ -48,6 +68,7 @@ class WebService {
     @MainActor
     func updateDataInDatabase(modelContext: ModelContext)  async {
         do {
+            print("Update database from server")
             let itemData: [CityDTO] = try await self.api.performOperation(GraphQLOperation.LIST_CITIES)
             
             for eachItem in itemData {

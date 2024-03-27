@@ -5,14 +5,14 @@
 //  Created by Omri Shapira on 20/03/2024.
 //
 
-import Foundation
+import SwiftUI
 
-struct DescriptionDTO: Codable {
-    let description: String
+struct ConditionDTO: Codable {
     let icon: String
+    let text: String
     
     enum CodingKeys: String, CodingKey {
-        case description = "text"
         case icon = "icon"
+        case text = "text"
     }
 }

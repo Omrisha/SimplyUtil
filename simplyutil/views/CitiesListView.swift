@@ -14,22 +14,24 @@ struct CitiesListView: View {
     @Query(sort: \CityEntity.name) var cities: [CityEntity]
     
     var body: some View {
-        List(cities, id: \.id) { city in
-            AsyncButton(action: {
-                await WebService().createModelInDatabase(item: city, modelContext: modelContext)
-                
-                dismiss()
-            }, label: {
-                HStack {
-                    Text(city.name)
-                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                        .font(.title3)
-                    Spacer()
-                    Text(city.country)
-                        .font(.subheadline)
-                        
-                }
-            })
+        List {
+            ForEach(cities, id: \.id) { city in
+                AsyncButton(action: {
+                    await WebService().createModelInDatabase(item: city, modelContext: modelContext)
+                    
+                    dismiss()
+                }, label: {
+                    HStack {
+                        Text(city.name)
+                            .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                            .font(.title3)
+                        Spacer()
+                        Text(city.country)
+                            .font(.subheadline)
+                            
+                    }
+                })
+            }
         }
         .overlay {
             if cities.isEmpty {

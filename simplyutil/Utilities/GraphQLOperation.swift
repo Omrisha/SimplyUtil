@@ -9,21 +9,32 @@ import Foundation
 
 struct GraphQLOperation : Encodable {
     var operationString: String
+    var variables: [String]?
     
     private let url = URL(string: "https://simplyutil.herokuapp.com/graphql")!
     
     enum CodingKeys: String, CodingKey {
         case variables
         case query
+        case variable
     }
     
-    init(_ operationString: String) {
+    init(_ operationString: String, variables: [String]? = nil) {
         self.operationString = operationString
+        self.variables = variables
+        
+        if let vars = variables {
+            for variable in vars {
+                let replacedOperationString = self.operationString.replacingOccurrences(of: "\\$\\w+", with: "\"\(variable)\"", options: .regularExpression)
+                self.operationString = replacedOperationString
+            }
+        }
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(operationString, forKey: .query)
+        
     }
     
     func getURLRequest() throws -> URLRequest {
@@ -42,7 +53,7 @@ extension GraphQLOperation {
         GraphQLOperation("{cityAndRates {country currency threeLetterCode id name}}")
     }
     
-    static var WEATHER: Self {
-        GraphQLOperation("{weather(filter: {cityName:\"Tel Aviv\"}) {current {temperatureCelcius temperatureFarenheit condition {text icon}}forecast {forecasts {date day {maxTemperatureCelcius maxTemperatureFarenheit minTemperatureCelcius minTemperatureFarenheit averageTemperatureCelcius averageTemperatureFarenheit condition {text icon}}}}}}")
+    static func WEATHER(forCity cityName: String) -> Self {
+        GraphQLOperation("{weather(filter: {cityName: $cityName}) {current {temperatureCelcius temperatureFarenheit condition {text icon}}forecast {forecasts {date day {maxTemperatureCelcius maxTemperatureFarenheit minTemperatureCelcius minTemperatureFarenheit averageTemperatureCelcius averageTemperatureFarenheit condition {text icon}}}}}}", variables: [cityName])
     }
 }

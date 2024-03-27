@@ -13,17 +13,29 @@ struct ContentView: View {
     @Environment(\.modelContext) var modelContext
     @Query(sort: \FavoriteEntity.id) var favorites: [FavoriteEntity]
     @State var addCity = false
-
+    @State private var swipedItemId: Int?
+    
+    let columns = [
+        GridItem(.adaptive(minimum: 150, maximum: 150)),
+        GridItem(.adaptive(minimum: 150, maximum: 150))
+    ]
+    
     var body: some View {
         NavigationView {
             List {
                 ForEach(favorites) { item in
-                    NavigationLink(destination: CityDetailView(city: item)) {
+                    let rates = favorites.filter { $0.name != item.name }.reduce([String: Double]()) { (dict, item) -> [String: Double] in
+                        var dict = dict
+                        dict[item.currency] = 0.0
+                        return dict
+                    }
+                    NavigationLink(destination: CityDetailView(rates: rates, city: item)) {
                         CityRow(cityData: item)
                     }
                 }
-                .onDelete(perform: deleteBooks)
+                .onDelete(perform: delete)
             }
+            .listStyle(GroupedListStyle())
             .navigationTitle("Simply")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -42,7 +54,7 @@ struct ContentView: View {
         }
     }
     
-    func deleteBooks(at offsets: IndexSet) {
+    func delete(at offsets: IndexSet) {
         for offset in offsets {
             // find this book in our query
             let favorite = favorites[offset]

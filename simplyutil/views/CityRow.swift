@@ -9,27 +9,16 @@ import SwiftUI
 
 struct CityRow: View {
     var cityData: FavoriteEntity
-    @State var amount: String = "0.0"
+    @State var amount: Double?
     
     var body: some View {
         HStack {
-            VStack(alignment: .leading) {
-                Text("\(cityData.name)")
-                Text(cityData.currency)
-                    .font(.caption)
-            }
-            .padding(.leading)
+            Text("\(cityData.name)")
             Spacer()
-            TextField("0.0", text: $amount)
-               .overlay(
-                   RoundedRectangle(cornerRadius: 20)
-                       .stroke(Color.teal)
-               )
-               .multilineTextAlignment(.center)
-                .frame(width: 150)
-                .padding([.leading, .trailing])
-                .font(.largeTitle)
-        }
+            Image(cityData.currency)
+                .resizable()
+                .frame(width: 45, height: 45)
+        }.padding([.leading, .trailing])
     }
 }
 
