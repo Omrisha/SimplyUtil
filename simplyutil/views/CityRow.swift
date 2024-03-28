@@ -13,6 +13,8 @@ struct CityRow: View {
     
     var body: some View {
         HStack {
+            Image(systemName: "star.fill")
+                .foregroundColor(.yellow)
             Text("\(cityData.name)")
             Spacer()
             Image(cityData.currency)

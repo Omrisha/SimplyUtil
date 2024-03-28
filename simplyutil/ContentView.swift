@@ -21,22 +21,24 @@ struct ContentView: View {
     ]
     
     var body: some View {
-        NavigationView {
+        NavigationSplitView {
             List {
                 ForEach(favorites) { item in
-                    let rates = favorites.filter { $0.name != item.name }.reduce([String: Double]()) { (dict, item) -> [String: Double] in
-                        var dict = dict
-                        dict[item.currency] = 0.0
-                        return dict
-                    }
-                    NavigationLink(destination: CityDetailView(rates: rates, city: item)) {
+                    NavigationLink {
+                        let rates = favorites.filter { $0.name != item.name }.reduce([String: Double]()) { (dict, item) -> [String: Double] in
+                            var dict = dict
+                            dict[item.currency] = 0.0
+                            return dict
+                        }
+                        CityDetailView(rates: rates, city: item)
+                    } label: {
                         CityRow(cityData: item)
                     }
                 }
                 .onDelete(perform: delete)
             }
             .listStyle(GroupedListStyle())
-            .navigationTitle("Simply")
+            .navigationTitle("Favorite Places")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
@@ -51,6 +53,8 @@ struct ContentView: View {
                 }
             }
             .accentColor(.primary)
+        } detail: {
+            Text("Select a favorite")
         }
     }
     

@@ -21,7 +21,7 @@ class WebService {
     let api: GraphQLAPI = GraphQLAPI()
     
     func fetchRates(currency: String) async -> RateDTO? {
-        let url = URL(string: "https://v6.exchangerate-api.com/v6/c04b66e4d1f1f147c60834b3/latest/USD")!
+        let url = URL(string: "https://v6.exchangerate-api.com/v6/c04b66e4d1f1f147c60834b3/latest/\(currency)")!
         var request = URLRequest(url: url)
         
         request.httpMethod = "GET"

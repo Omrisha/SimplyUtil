@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ForecastRowCell: View {
     var days: ForecastsDTO
-    @State private var currentValue: CGFloat = 0
+    @Binding var tempType: Bool
     @State private var dayOfTheWeek: String = ""
     
     var body: some View {
@@ -28,27 +28,16 @@ struct ForecastRowCell: View {
             }
             .frame(width: 25, height: 25)
                 .padding(.trailing, 8)
-            Text("\(Int(days.day.minTemperatureCelsius))°")
-            CustomSlider(value: $currentValue, maxValue: days.day.maxTemperatureCelsius)
+            Text("\(Int(tempType ? days.day.minTemperatureCelsius : days.day.minTemperatureFarenheit))°")
+            CustomSlider(value: Binding.constant(tempType ? days.day.averageTemperatureCelsius : days.day.averageTemperatureFarenheit), maxValue: tempType ? days.day.maxTemperatureCelsius : days.day.maxTemperatureFarenheit)
                 .frame(width: 150, height: 10)
-            Text("\(Int(days.day.maxTemperatureCelsius))°")
+            Text("\(Int(tempType ? days.day.maxTemperatureCelsius : days.day.maxTemperatureFarenheit))°")
         }
         .padding()
         .onAppear{
             if let date = self.days.date.toDate(dateFormatter: DateFormatter(format: "yyyy-MM-dd")) {
                 dayOfTheWeek = date.getTodayWeekDay()
             }
-            
-            currentValue = self.days.day.averageTemperatureCelsius
         }
-    }
-}
-
-#Preview {
-    do {
-        let favorite = ForecastsDTO(date: "2024-03-23", day: DayDTO(maxTemperatureCelsius: 20, maxTemperatureFarenheit: 60, minTemperatureCelsius: 10, minTemperatureFarenheit: 40, averageTemperatureCelsius: 15, averageTemperatureFarenheit: 50, condition: ConditionDTO(icon: "https://cdn.weatherapi.com/weather/64x64/day/116.png", text: "Partly Cloudly")))
-        return ForecastRowCell(days: favorite)
-    } catch {
-        fatalError("Failed to create model container")
     }
 }
