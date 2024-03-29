@@ -11,10 +11,14 @@ struct LandmarkRow: View {
     var landmark: Landmark
     var body: some View {
         HStack {
-            landmark.image
-                .resizable()
-                .frame(width: 50, height: 50)
-            Text(landmark.name)
+            AsyncImage(url: URL(string: landmark.images.first!)){  image in
+                image
+                    .resizable()
+                    .frame(width: 50, height: 50)
+            } placeholder: {
+                ProgressView()
+            }
+            Text(landmark.displayName.text)
             
             Spacer()
         }
@@ -23,7 +27,7 @@ struct LandmarkRow: View {
 
 #Preview {
     Group {
-        LandmarkRow(landmark: landmarks[0])
-        LandmarkRow(landmark: landmarks[1])
+        LandmarkRow(landmark: landmarks.places[0])
+        LandmarkRow(landmark: landmarks.places[1])
     }
 }

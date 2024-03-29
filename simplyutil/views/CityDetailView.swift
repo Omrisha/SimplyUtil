@@ -25,12 +25,12 @@ struct CityDetailView: View {
             .tabItem {
                 Label("Weather", systemImage: "sun.max.circle")
             }.tag(1)
-            LandmarkList()
+            LandmarkList(cityName: city.name, country: city.country)
                 .tabItem {
                     Label("Recommendation", systemImage: "checkmark.seal")
                 }.tag(2)
         }
-        .navigationTitle("\(city.name), \(city.threeLetterCode)")
+        .navigationBarTitle("\(city.name), \(city.threeLetterCode)")
         .ignoresSafeArea()
         .onAppear {
             Task.init{

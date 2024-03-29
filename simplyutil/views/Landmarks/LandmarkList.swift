@@ -8,22 +8,34 @@
 import SwiftUI
 
 struct LandmarkList: View {
+    var cityName: String
+    var country: String
+    @State var landmarks: [Landmark] = []
+    
     var body: some View {
         NavigationSplitView {
-            List(landmarks, id: \.id) { landmark in
+            List(landmarks, id: \.formattedAddress) { landmark in
                 NavigationLink {
                     LandmarkDetail(landmark: landmark)
                 } label: {
                     LandmarkRow(landmark: landmark)
                 }
             }
-            .navigationTitle("Landmarks")
         } detail: {
             Text("Select a landmark")
+        }
+        .onAppear {
+            Task.init {
+                if let places: Places = await WebService().fetchLandmarks(cityName: cityName, country: country) {
+                    self.landmarks = places.places
+                } else {
+                    self.landmarks = []
+                }
+            }
         }
     }
 }
 
 #Preview {
-    LandmarkList()
+    LandmarkList(cityName: "London", country: "England", landmarks: landmarks.places)
 }

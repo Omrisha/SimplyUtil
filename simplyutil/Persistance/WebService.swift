@@ -16,9 +16,41 @@ enum NetworkError: Error {
     case failedToDecodeResponse
 }
 
+struct GetLandmarkByCityName: Codable {
+    var textQuery: String
+}
+
 @available(iOS 17, *)
 class WebService {
     let api: GraphQLAPI = GraphQLAPI()
+    
+    func fetchLandmarks(cityName: String, country: String) async -> Places? {
+        do {
+            let url = URL(string: "https://places.googleapis.com/v1/places:searchText")!
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            
+            var input: GetLandmarkByCityName = GetLandmarkByCityName(textQuery: "Places to visit in \(cityName), \(country)")
+            request.httpBody = try JSONEncoder().encode(input)
+            
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            request.setValue("AIzaSyCY8tE6b4IZtYbltP2LUrV0wY982vaz8Pw", forHTTPHeaderField: "X-Goog-Api-Key")
+            request.setValue("places.displayName,places.formattedAddress,places.location,places.rating,places.businessStatus,places.photos.name,places.photos.heightPx,places.photos.widthPx", forHTTPHeaderField: "X-Goog-FieldMask")
+            
+            do {
+                let (data, _) = try await URLSession.shared.getData(from: request)
+                
+                let result = try JSONDecoder().decode(Places.self, from: data)
+                return result
+            } catch {
+                print("Error fetching landmark data from google place")
+            }
+
+        } catch {
+            print("Invalid data")
+        }
+        return nil
+    }
     
     func fetchRates(currency: String) async -> RateDTO? {
         let url = URL(string: "https://v6.exchangerate-api.com/v6/c04b66e4d1f1f147c60834b3/latest/\(currency)")!

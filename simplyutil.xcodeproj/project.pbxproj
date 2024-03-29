@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B20F82AC2BB71CA400C2CBD1 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20F82AB2BB71CA400C2CBD1 /* StarView.swift */; };
+		B20F82AE2BB71D5300C2CBD1 /* GridItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20F82AD2BB71D5300C2CBD1 /* GridItemView.swift */; };
+		B20F82B02BB71E4C00C2CBD1 /* LandmarkPhotoGallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20F82AF2BB71E4C00C2CBD1 /* LandmarkPhotoGallery.swift */; };
 		B211ABBC2BB4C7EF0083A054 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = B211ABBB2BB4C7EF0083A054 /* Currency.swift */; };
 		B211ABBE2BB551BE0083A054 /* ForecastListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B211ABBD2BB551BE0083A054 /* ForecastListView.swift */; };
 		B211ABC02BB552B50083A054 /* CurrencyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B211ABBF2BB552B50083A054 /* CurrencyListView.swift */; };
@@ -71,6 +74,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B20F82AB2BB71CA400C2CBD1 /* StarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarView.swift; sourceTree = "<group>"; };
+		B20F82AD2BB71D5300C2CBD1 /* GridItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridItemView.swift; sourceTree = "<group>"; };
+		B20F82AF2BB71E4C00C2CBD1 /* LandmarkPhotoGallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandmarkPhotoGallery.swift; sourceTree = "<group>"; };
 		B211ABBB2BB4C7EF0083A054 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		B211ABBD2BB551BE0083A054 /* ForecastListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastListView.swift; sourceTree = "<group>"; };
 		B211ABBF2BB552B50083A054 /* CurrencyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyListView.swift; sourceTree = "<group>"; };
@@ -153,6 +159,8 @@
 				B211ABCA2BB5E7F40083A054 /* LandmarkRow.swift */,
 				B211ABCE2BB5EAF70083A054 /* LandmarkList.swift */,
 				B211ABD02BB5EBBC0083A054 /* LandmarkDetail.swift */,
+				B20F82AD2BB71D5300C2CBD1 /* GridItemView.swift */,
+				B20F82AF2BB71E4C00C2CBD1 /* LandmarkPhotoGallery.swift */,
 			);
 			path = Landmarks;
 			sourceTree = "<group>";
@@ -282,6 +290,7 @@
 				B2C360FB273078DF00CE67F5 /* CustomTextField.swift */,
 				B299AE322BACAD91009A6D8D /* AsyncButton.swift */,
 				B299AE4C2BB21730009A6D8D /* CustomSlider.swift */,
+				B20F82AB2BB71CA400C2CBD1 /* StarView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -432,6 +441,7 @@
 				B2B6E5A227301B8000D30397 /* ContentView.swift in Sources */,
 				B299AE512BB4B25F009A6D8D /* ViewExtensions.swift in Sources */,
 				B2B6E5CB27301BA700D30397 /* CityRow.swift in Sources */,
+				B20F82AC2BB71CA400C2CBD1 /* StarView.swift in Sources */,
 				B211ABD52BB5EC090083A054 /* MapView.swift in Sources */,
 				B299AE332BACAD91009A6D8D /* AsyncButton.swift in Sources */,
 				B2B6E5A027301B8000D30397 /* simplyutilApp.swift in Sources */,
@@ -445,6 +455,7 @@
 				B2E46A942BAB527E0032C75C /* CityEntity.swift in Sources */,
 				B299AE4D2BB21730009A6D8D /* CustomSlider.swift in Sources */,
 				B211ABCF2BB5EAF70083A054 /* LandmarkList.swift in Sources */,
+				B20F82AE2BB71D5300C2CBD1 /* GridItemView.swift in Sources */,
 				B211ABBE2BB551BE0083A054 /* ForecastListView.swift in Sources */,
 				B299AE3D2BACBD70009A6D8D /* FavoriteEntity.swift in Sources */,
 				B299AE4B2BAF2B32009A6D8D /* DateExtensions.swift in Sources */,
@@ -452,6 +463,7 @@
 				B2C360FE27307AD700CE67F5 /* ForecastDTO.swift in Sources */,
 				B299AE432BAF06D6009A6D8D /* SwipableCard.swift in Sources */,
 				B211ABC82BB5E5C90083A054 /* ModelData.swift in Sources */,
+				B20F82B02BB71E4C00C2CBD1 /* LandmarkPhotoGallery.swift in Sources */,
 				B299AE3F2BACCD93009A6D8D /* CitiesListView.swift in Sources */,
 				B299AE4F2BB4A02C009A6D8D /* RateDTO.swift in Sources */,
 				B299AE472BAF218A009A6D8D /* CurrentDTO.swift in Sources */,
