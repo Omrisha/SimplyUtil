@@ -14,12 +14,16 @@ struct LandmarkList: View {
     
     var body: some View {
         NavigationSplitView {
-            List(landmarks, id: \.formattedAddress) { landmark in
-                NavigationLink {
-                    LandmarkDetail(landmark: landmark)
-                } label: {
-                    LandmarkRow(landmark: landmark)
+            if landmarks.count > 0 {
+                List(landmarks, id: \.formattedAddress) { landmark in
+                    NavigationLink {
+                        LandmarkDetail(landmark: landmark)
+                    } label: {
+                        LandmarkRow(landmark: landmark)
+                    }
                 }
+            } else {
+                Text("No landmark found")
             }
         } detail: {
             Text("Select a landmark")

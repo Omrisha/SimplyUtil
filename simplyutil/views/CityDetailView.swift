@@ -30,6 +30,7 @@ struct CityDetailView: View {
                     Label("Recommendation", systemImage: "checkmark.seal")
                 }.tag(2)
         }
+        .navigationBarTitleDisplayMode(.inline)
         .navigationBarTitle("\(city.name), \(city.threeLetterCode)")
         .ignoresSafeArea()
         .onAppear {

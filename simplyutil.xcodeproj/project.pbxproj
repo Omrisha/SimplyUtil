@@ -54,6 +54,7 @@
 		B2E46A902BAB51630032C75C /* CityDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E46A8F2BAB51630032C75C /* CityDTO.swift */; };
 		B2E46A942BAB527E0032C75C /* CityEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E46A932BAB527E0032C75C /* CityEntity.swift */; };
 		B2E46A962BAB54400032C75C /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E46A952BAB54400032C75C /* WebService.swift */; };
+		B2E6FE4B2BB867BF0061B779 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E6FE4A2BB867BF0061B779 /* Environment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +125,9 @@
 		B2E46A8F2BAB51630032C75C /* CityDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityDTO.swift; sourceTree = "<group>"; };
 		B2E46A932BAB527E0032C75C /* CityEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityEntity.swift; sourceTree = "<group>"; };
 		B2E46A952BAB54400032C75C /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
+		B2E6FE492BB866C30061B779 /* AppConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AppConfig.xcconfig; sourceTree = "<group>"; };
+		B2E6FE4A2BB867BF0061B779 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		B2E6FE4C2BB869170061B779 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +214,7 @@
 		B2B6E59E27301B8000D30397 /* simplyutil */ = {
 			isa = PBXGroup;
 			children = (
+				B2E6FE4C2BB869170061B779 /* Info.plist */,
 				B2757CBB2737D877003A5CB5 /* Utilities */,
 				B284104E27312ABF00EDA7D3 /* Persistance */,
 				B2C360FA273078C300CE67F5 /* Helpers */,
@@ -220,6 +225,8 @@
 				B211ABCC2BB5E8710083A054 /* landmarkData.json */,
 				B2B6E5A327301B8100D30397 /* Assets.xcassets */,
 				B2B6E5A527301B8100D30397 /* Preview Content */,
+				B2E6FE492BB866C30061B779 /* AppConfig.xcconfig */,
+				B2E6FE4A2BB867BF0061B779 /* Environment.swift */,
 			);
 			path = simplyutil;
 			sourceTree = "<group>";
@@ -457,6 +464,7 @@
 				B211ABCF2BB5EAF70083A054 /* LandmarkList.swift in Sources */,
 				B20F82AE2BB71D5300C2CBD1 /* GridItemView.swift in Sources */,
 				B211ABBE2BB551BE0083A054 /* ForecastListView.swift in Sources */,
+				B2E6FE4B2BB867BF0061B779 /* Environment.swift in Sources */,
 				B299AE3D2BACBD70009A6D8D /* FavoriteEntity.swift in Sources */,
 				B299AE4B2BAF2B32009A6D8D /* DateExtensions.swift in Sources */,
 				B299AE452BAF212F009A6D8D /* DayDTO.swift in Sources */,
@@ -621,6 +629,7 @@
 		};
 		B2B6E5C127301B8100D30397 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B2E6FE492BB866C30061B779 /* AppConfig.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -630,6 +639,7 @@
 				DEVELOPMENT_TEAM = XJ6N6JRED2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = simplyutil/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -651,6 +661,7 @@
 		};
 		B2B6E5C227301B8100D30397 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B2E6FE492BB866C30061B779 /* AppConfig.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -660,6 +671,7 @@
 				DEVELOPMENT_TEAM = XJ6N6JRED2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = simplyutil/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

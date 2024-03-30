@@ -26,7 +26,9 @@ struct Landmark: Hashable, Codable {
     let displayName: DisplayName
     private let photos: [Photo]
     var images: [String] {
-        photos.map { "https://places.googleapis.com/v1/\($0.name)/media?maxHeightPx=\($0.heightPx)&maxWidthPx=\($0.widthPx)&key=AIzaSyCY8tE6b4IZtYbltP2LUrV0wY982vaz8Pw" }
+        photos.map { img in
+            print("\(displayName.text) -> https://places.googleapis.com/v1/\(img.name)/media?maxHeightPx=400&maxWidthPx=400&key=\(EnvironmentKeys.apiKey)")
+            return "https://places.googleapis.com/v1/\(img.name)/media?maxHeightPx=400&maxWidthPx=400&key=\(EnvironmentKeys.apiKey)" }
     }
     
     struct Location: Hashable, Codable {

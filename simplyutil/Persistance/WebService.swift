@@ -30,11 +30,11 @@ class WebService {
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
             
-            var input: GetLandmarkByCityName = GetLandmarkByCityName(textQuery: "Places to visit in \(cityName), \(country)")
+            let input: GetLandmarkByCityName = GetLandmarkByCityName(textQuery: "Places to visit in \(cityName), \(country)")
             request.httpBody = try JSONEncoder().encode(input)
             
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.setValue("AIzaSyCY8tE6b4IZtYbltP2LUrV0wY982vaz8Pw", forHTTPHeaderField: "X-Goog-Api-Key")
+            request.setValue(EnvironmentKeys.apiKey, forHTTPHeaderField: "X-Goog-Api-Key")
             request.setValue("places.displayName,places.formattedAddress,places.location,places.rating,places.businessStatus,places.photos.name,places.photos.heightPx,places.photos.widthPx", forHTTPHeaderField: "X-Goog-FieldMask")
             
             do {
