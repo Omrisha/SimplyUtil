@@ -13,6 +13,7 @@ struct CurrencyListView: View {
     @State var currencyToRate: [String: Double] = [:]
     @State var rates: [String: Double]
     @State var amount: Double?
+    @FocusState private var focusedField: Bool
     
     var body: some View {
         List {
@@ -23,10 +24,18 @@ struct CurrencyListView: View {
                         .frame(width: 45, height: 45)
                     TextField("Enter amount", value: $amount, format: .number)
                         .keyboardType(.decimalPad)
-                        .submitLabel(.done)
+                        .submitLabel(.return)
                         .multilineTextAlignment(.center)
                         .font(.largeTitle)
                         .padding([.trailing, .leading])
+                        .focused($focusedField)
+                    .toolbar {
+                        ToolbarItem(placement: .keyboard) {
+                            Button("Done") {
+                                focusedField = false
+                            }
+                        }
+                    }
                     Text("\(Currency.currency(for: currency)!.shortestSymbol)")
                         .font(.largeTitle)
                 }

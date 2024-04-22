@@ -1,0 +1,11 @@
+//
+//  AppConfig.xcconfig
+//  simplyutil
+//
+//  Created by Omri Shapira on 30/03/2024.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+GooglePlacesApiKey = AIzaSyCY8tE6b4IZtYbltP2LUrV0wY982vaz8Pw

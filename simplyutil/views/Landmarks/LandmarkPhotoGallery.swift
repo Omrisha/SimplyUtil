@@ -19,12 +19,17 @@ struct LandmarkPhotoGallery: View {
     }
     
     var body: some View {
-        VStack {
+        NavigationView {
             ScrollView {
                 LazyVGrid(columns: gridColumns) {
                     ForEach(photosUrls, id: \.self) { item in
                         GeometryReader { geo in
                             GridItemView(size: geo.size.width, item: item)
+                                .contextMenu {
+                                    Text("Image")
+                                } preview: {
+                                    DetailedGrimItemView(item: item)
+                                }
                         }
                         .cornerRadius(8.0)
                         .aspectRatio(1, contentMode: .fit)

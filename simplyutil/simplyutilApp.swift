@@ -23,6 +23,9 @@ struct simplyutilApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .task {
+                    await WebService().updateDataInDatabase(modelContext:   modelContainer.mainContext)
+                }
         }
         .modelContainer(modelContainer)
     }

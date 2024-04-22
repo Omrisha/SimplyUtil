@@ -100,12 +100,20 @@ class WebService {
     @MainActor
     func updateDataInDatabase(modelContext: ModelContext)  async {
         do {
-            print("Update database from server")
-            let itemData: [CityDTO] = try await self.api.performOperation(GraphQLOperation.LIST_CITIES)
             
-            for eachItem in itemData {
-                let itemToStore = CityEntity(item: eachItem)
-                modelContext.insert(itemToStore)
+            var citiesDescriptor = FetchDescriptor<CityEntity>()
+            citiesDescriptor.fetchLimit = 1
+            
+            let persistedCities = try modelContext.fetch(citiesDescriptor)
+            
+            if persistedCities.isEmpty {
+                print("Update database from server")
+                let itemData: [CityDTO] = try await self.api.performOperation(GraphQLOperation.LIST_CITIES)
+                
+                for eachItem in itemData {
+                    let itemToStore = CityEntity(item: eachItem)
+                    modelContext.insert(itemToStore)
+                }
             }
         } catch {
             print("Error fetching data")

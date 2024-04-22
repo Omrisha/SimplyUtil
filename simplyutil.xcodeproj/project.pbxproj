@@ -21,7 +21,7 @@
 		B211ABD12BB5EBBC0083A054 /* LandmarkDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = B211ABD02BB5EBBC0083A054 /* LandmarkDetail.swift */; };
 		B211ABD42BB5EC090083A054 /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B211ABD22BB5EC090083A054 /* CircleImage.swift */; };
 		B211ABD52BB5EC090083A054 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B211ABD32BB5EC090083A054 /* MapView.swift */; };
-		B284105227313FAD00EDA7D3 /* NewCityForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = B284105127313FAD00EDA7D3 /* NewCityForm.swift */; };
+		B21DA3AF2BD2C7C900557B7A /* PaginatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B21DA3AE2BD2C7C900557B7A /* PaginatedView.swift */; };
 		B299AE2F2BAB6158009A6D8D /* WeatherDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299AE2E2BAB6158009A6D8D /* WeatherDTO.swift */; };
 		B299AE312BAB6172009A6D8D /* ConditionDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299AE302BAB6172009A6D8D /* ConditionDTO.swift */; };
 		B299AE332BACAD91009A6D8D /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299AE322BACAD91009A6D8D /* AsyncButton.swift */; };
@@ -51,10 +51,12 @@
 		B2C360FC273078DF00CE67F5 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C360FB273078DF00CE67F5 /* CustomTextField.swift */; };
 		B2C360FE27307AD700CE67F5 /* ForecastDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C360FD27307AD700CE67F5 /* ForecastDTO.swift */; };
 		B2C3610027307B7A00CE67F5 /* ForecastRowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C360FF27307B7A00CE67F5 /* ForecastRowCell.swift */; };
+		B2DBD6192BD18726008949C3 /* CitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DBD6182BD18726008949C3 /* CitiesViewModel.swift */; };
 		B2E46A902BAB51630032C75C /* CityDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E46A8F2BAB51630032C75C /* CityDTO.swift */; };
 		B2E46A942BAB527E0032C75C /* CityEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E46A932BAB527E0032C75C /* CityEntity.swift */; };
 		B2E46A962BAB54400032C75C /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E46A952BAB54400032C75C /* WebService.swift */; };
 		B2E6FE4B2BB867BF0061B779 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E6FE4A2BB867BF0061B779 /* Environment.swift */; };
+		B2E6FE4E2BB87A040061B779 /* DetailedGrimItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E6FE4D2BB87A040061B779 /* DetailedGrimItemView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,7 +91,7 @@
 		B211ABD02BB5EBBC0083A054 /* LandmarkDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandmarkDetail.swift; sourceTree = "<group>"; };
 		B211ABD22BB5EC090083A054 /* CircleImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
 		B211ABD32BB5EC090083A054 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
-		B284105127313FAD00EDA7D3 /* NewCityForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCityForm.swift; sourceTree = "<group>"; };
+		B21DA3AE2BD2C7C900557B7A /* PaginatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedView.swift; sourceTree = "<group>"; };
 		B299AE2E2BAB6158009A6D8D /* WeatherDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDTO.swift; sourceTree = "<group>"; };
 		B299AE302BAB6172009A6D8D /* ConditionDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionDTO.swift; sourceTree = "<group>"; };
 		B299AE322BACAD91009A6D8D /* AsyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
@@ -122,12 +124,14 @@
 		B2C360FB273078DF00CE67F5 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		B2C360FD27307AD700CE67F5 /* ForecastDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastDTO.swift; sourceTree = "<group>"; };
 		B2C360FF27307B7A00CE67F5 /* ForecastRowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForecastRowCell.swift; sourceTree = "<group>"; };
+		B2DBD6182BD18726008949C3 /* CitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesViewModel.swift; sourceTree = "<group>"; };
 		B2E46A8F2BAB51630032C75C /* CityDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityDTO.swift; sourceTree = "<group>"; };
 		B2E46A932BAB527E0032C75C /* CityEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityEntity.swift; sourceTree = "<group>"; };
 		B2E46A952BAB54400032C75C /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 		B2E6FE492BB866C30061B779 /* AppConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = AppConfig.xcconfig; sourceTree = "<group>"; };
 		B2E6FE4A2BB867BF0061B779 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		B2E6FE4C2BB869170061B779 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B2E6FE4D2BB87A040061B779 /* DetailedGrimItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedGrimItemView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +169,7 @@
 				B211ABD02BB5EBBC0083A054 /* LandmarkDetail.swift */,
 				B20F82AD2BB71D5300C2CBD1 /* GridItemView.swift */,
 				B20F82AF2BB71E4C00C2CBD1 /* LandmarkPhotoGallery.swift */,
+				B2E6FE4D2BB87A040061B779 /* DetailedGrimItemView.swift */,
 			);
 			path = Landmarks;
 			sourceTree = "<group>";
@@ -214,6 +219,7 @@
 		B2B6E59E27301B8000D30397 /* simplyutil */ = {
 			isa = PBXGroup;
 			children = (
+				B2DBD6172BD1870B008949C3 /* ViewModels */,
 				B2E6FE4C2BB869170061B779 /* Info.plist */,
 				B2757CBB2737D877003A5CB5 /* Utilities */,
 				B284104E27312ABF00EDA7D3 /* Persistance */,
@@ -263,7 +269,6 @@
 				B2C360FF27307B7A00CE67F5 /* ForecastRowCell.swift */,
 				B2B6E5CA27301BA700D30397 /* CityRow.swift */,
 				B2C360F8273076B200CE67F5 /* CityDetailView.swift */,
-				B284105127313FAD00EDA7D3 /* NewCityForm.swift */,
 				B299AE3E2BACCD93009A6D8D /* CitiesListView.swift */,
 				B299AE422BAF06D6009A6D8D /* SwipableCard.swift */,
 				B211ABBD2BB551BE0083A054 /* ForecastListView.swift */,
@@ -298,8 +303,17 @@
 				B299AE322BACAD91009A6D8D /* AsyncButton.swift */,
 				B299AE4C2BB21730009A6D8D /* CustomSlider.swift */,
 				B20F82AB2BB71CA400C2CBD1 /* StarView.swift */,
+				B21DA3AE2BD2C7C900557B7A /* PaginatedView.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		B2DBD6172BD1870B008949C3 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				B2DBD6182BD18726008949C3 /* CitiesViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -366,7 +380,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1310;
-				LastUpgradeCheck = 1310;
+				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					B2B6E59B27301B8000D30397 = {
 						CreatedOnToolsVersion = 13.1;
@@ -436,11 +450,12 @@
 				B2C360FC273078DF00CE67F5 /* CustomTextField.swift in Sources */,
 				B299AE352BACB9DA009A6D8D /* URLSessionExtensions.swift in Sources */,
 				B299AE372BACBA0E009A6D8D /* GraphQLOperation.swift in Sources */,
+				B2E6FE4E2BB87A040061B779 /* DetailedGrimItemView.swift in Sources */,
 				B299AE3B2BACBA62009A6D8D /* GraphQLAPI.swift in Sources */,
 				B211ABD12BB5EBBC0083A054 /* LandmarkDetail.swift in Sources */,
-				B284105227313FAD00EDA7D3 /* NewCityForm.swift in Sources */,
 				B211ABBC2BB4C7EF0083A054 /* Currency.swift in Sources */,
 				B299AE392BACBA39009A6D8D /* GraphQLResult.swift in Sources */,
+				B2DBD6192BD18726008949C3 /* CitiesViewModel.swift in Sources */,
 				B211ABC02BB552B50083A054 /* CurrencyListView.swift in Sources */,
 				B299AE492BAF21B5009A6D8D /* ForecastsDTO.swift in Sources */,
 				B299AE2F2BAB6158009A6D8D /* WeatherDTO.swift in Sources */,
@@ -467,6 +482,7 @@
 				B2E6FE4B2BB867BF0061B779 /* Environment.swift in Sources */,
 				B299AE3D2BACBD70009A6D8D /* FavoriteEntity.swift in Sources */,
 				B299AE4B2BAF2B32009A6D8D /* DateExtensions.swift in Sources */,
+				B21DA3AF2BD2C7C900557B7A /* PaginatedView.swift in Sources */,
 				B299AE452BAF212F009A6D8D /* DayDTO.swift in Sources */,
 				B2C360FE27307AD700CE67F5 /* ForecastDTO.swift in Sources */,
 				B299AE432BAF06D6009A6D8D /* SwipableCard.swift in Sources */,
@@ -515,6 +531,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -548,6 +565,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -562,7 +580,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -576,6 +594,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -609,6 +628,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -617,7 +637,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -640,6 +660,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = simplyutil/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Trip Master";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -672,6 +693,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = simplyutil/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Trip Master";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -700,7 +722,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XJ6N6JRED2;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -725,7 +747,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = XJ6N6JRED2;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

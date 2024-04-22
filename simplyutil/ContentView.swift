@@ -14,6 +14,7 @@ struct ContentView: View {
     @Query(sort: \FavoriteEntity.id) var favorites: [FavoriteEntity]
     @State var addCity = false
     @State private var swipedItemId: Int?
+    @State var searchQuery: String = ""
     
     let columns = [
         GridItem(.adaptive(minimum: 150, maximum: 150)),
@@ -48,7 +49,7 @@ struct ContentView: View {
                             .font(.title2.weight(.medium))
                     })
                     .sheet(isPresented: self.$addCity, content: {
-                        NewCityForm()
+                        CitiesListView()
                     })
                 }
             }
