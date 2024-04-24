@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ForecastsDTO: Identifiable, Codable {
     var id = UUID()
-    let date: String
+    let date: Date
     let day: DayDTO
     
     enum CodingKeys: String, CodingKey {

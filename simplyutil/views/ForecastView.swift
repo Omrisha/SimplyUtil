@@ -7,26 +7,6 @@
 
 import SwiftUI
 
-struct ForecastsList: View {
-    var forecasts: [ForecastsDTO]
-    @Binding var tempKind: Bool
-    
-    var body: some View {
-        if forecasts.count > 0 {
-            List {
-                ForEach(forecasts) { forecast in
-                    ForecastRowCell(
-                        forecast: forecast,
-                        tempType: $tempKind)
-                    .listRowInsets(EdgeInsets())
-                }
-            }
-        } else {
-            ProgressView()
-        }
-    }
-}
-
 struct ForecastView: View {
     var cityName: String
     @State var forecasts: [ForecastsDTO] = []
@@ -34,15 +14,13 @@ struct ForecastView: View {
     @Binding var tempKind: Bool
     
     var body: some View {
-        ScrollView(.vertical) {
+        VStack {
             CardWeatherView(weather: currentWeather, title: "Temperature", titleImage: "thermometer.sun", tempKind: $tempKind)
             CardWeatherView(weather: currentWeather, title: "Wind", titleImage: "wind", tempKind: $tempKind)
             CardWeatherView(weather: currentWeather, title: "Humidity", titleImage: "humidity", tempKind: $tempKind)
             
-            ForecastsList(forecasts: forecasts, tempKind: $tempKind)
-                .frame(alignment: .center)
-                .background(.clear)
-                .opacity(0.1)
+            ForecastsListView(forecasts: forecasts, tempKind: $tempKind)
+                .cornerRadius(10)
                 .padding()
         }
         .onAppear {

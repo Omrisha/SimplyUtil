@@ -8,13 +8,12 @@
 import SwiftUI
 
 struct DayDTO: Codable {
-    let maxTemperatureCelsius: Double
-    let maxTemperatureFarenheit: Double
-    let minTemperatureCelsius: Double
-    let minTemperatureFarenheit: Double
-    let averageTemperatureCelsius: Double
-    let averageTemperatureFarenheit: Double
-    let condition: ConditionDTO
+    let maxTemperatureCelsius: Float
+    let maxTemperatureFarenheit: Float
+    let minTemperatureCelsius: Float
+    let minTemperatureFarenheit: Float
+    let averageTemperatureCelsius: Int
+    let averageTemperatureFarenheit: Int
     
     enum CodingKeys: String, CodingKey {
         case maxTemperatureCelsius = "maxTemperatureCelcius"
@@ -23,6 +22,5 @@ struct DayDTO: Codable {
         case minTemperatureFarenheit = "minTemperatureFarenheit"
         case averageTemperatureCelsius = "averageTemperatureCelcius"
         case averageTemperatureFarenheit = "averageTemperatureFarenheit"
-        case condition = "condition"
     }
 }

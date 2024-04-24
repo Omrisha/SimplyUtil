@@ -26,12 +26,7 @@ struct ContentView: View {
             List {
                 ForEach(favorites) { item in
                     NavigationLink {
-                        let rates = favorites.filter { $0.name != item.name }.reduce([String: Double]()) { (dict, item) -> [String: Double] in
-                            var dict = dict
-                            dict[item.currency] = 0.0
-                            return dict
-                        }
-                        CityDetailView(rates: rates, city: item)
+                        CityDetailView(city: item)
                     } label: {
                         CityRow(cityData: item)
                     }

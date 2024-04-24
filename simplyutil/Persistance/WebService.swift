@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import CoreLocation
 
 enum NetworkError: Error {
     case badUrl
@@ -72,16 +73,33 @@ class WebService {
         return nil
     }
     
-    func fetchWeather(cityName: String) async -> WeatherDTO? {
+    func fetchWeather(cityName: String) async -> [LocationWeatherDTO] {
         do {
-            let itemData: WeatherDTO = try await self.api.performOperation(GraphQLOperation.WEATHER(forCity: cityName))
+            let location: CLLocation? = await getCoordinate(addressString: cityName)
             
-            return itemData
+            let longitude: Double = location?.coordinate.longitude ?? 0.0
+            let latitude: Double = location?.coordinate.latitude ?? 0.0
+            
+            let itemData: WeatherByLocationDTO = try await self.api.performOperation(GraphQLOperation.WEATHER(latitude:  latitude, longitude: longitude))
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+            
+            let datetimes: [Date?] = itemData.hourly.time.map { time in dateFormatter.date(from: time)}
+            var forecasts: [LocationWeatherDTO] = []
+            for (i, date) in datetimes.enumerated() {
+                let farenheit = (itemData.hourly.temperature[i] * 9/5) + 32
+                forecasts.append(LocationWeatherDTO(dayOfTheWeek: date!.getTodayWeekDay(), time: date!, temperature: itemData.hourly.temperature[i],
+                                                    fahrenheit: farenheit, windSpeed: itemData.hourly.windSpeed[i], relativeHumidity: itemData.hourly.relativeHumidity[i]))
+            }
+            
+            return forecasts
         } catch {
             print("Error fetching data")
             print(error.localizedDescription)
         }
-        return nil
+        return []
     }
     
     @MainActor

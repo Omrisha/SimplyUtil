@@ -9,9 +9,10 @@ import SwiftUI
 import SwiftData
 
 struct CurrencyListView: View {
+    @Query(sort: \FavoriteEntity.id) var favorites: [FavoriteEntity]
     var currency: String = "USD"
     @State var currencyToRate: [String: Double] = [:]
-    @State var rates: [String: Double]
+    @State var rates: [String: Double] = [:]
     @State var amount: Double?
     @FocusState private var focusedField: Bool
     
@@ -23,8 +24,7 @@ struct CurrencyListView: View {
                         .resizable()
                         .frame(width: 45, height: 45)
                     TextField("Enter amount", value: $amount, format: .number)
-                        .keyboardType(.decimalPad)
-                        .submitLabel(.return)
+                        .keyboardType(.numberPad)
                         .multilineTextAlignment(.center)
                         .font(.largeTitle)
                         .padding([.trailing, .leading])
@@ -55,6 +55,12 @@ struct CurrencyListView: View {
             }
         }
         .onAppear {
+            self.rates = favorites.filter { $0.currency != currency }.reduce([String: Double]()) { (dict, item) -> [String: Double] in
+                var dict = dict
+                dict[item.currency] = 0.0
+                return dict
+            }
+            
             Task.init{
                 await loadRates(for: currency)
             }
@@ -69,5 +75,5 @@ struct CurrencyListView: View {
 }
 
 #Preview {
-    CurrencyListView(currency: "USD", rates: ["USD": 0.0])
+    CurrencyListView(currency: "USD")
 }

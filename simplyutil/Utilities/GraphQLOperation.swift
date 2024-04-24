@@ -9,7 +9,7 @@ import Foundation
 
 struct GraphQLOperation : Encodable {
     var operationString: String
-    var variables: [String]?
+    var variables: [Any]?
     
     private let url = URL(string: "https://simplyutil.herokuapp.com/graphql")!
     
@@ -19,16 +19,17 @@ struct GraphQLOperation : Encodable {
         case variable
     }
     
-    init(_ operationString: String, variables: [String]? = nil) {
+    init(_ operationString: String, variables: [Any]? = nil) {
         self.operationString = operationString
         self.variables = variables
         
         if let vars = variables {
             for variable in vars {
-                let replacedOperationString = self.operationString.replacingOccurrences(of: "\\$\\w+", with: "\"\(variable)\"", options: .regularExpression)
+                let replacedOperationString = self.operationString.replacingOccurrences(of: "\\$\\w+", with: "\(variable)", options: .regularExpression)
                 self.operationString = replacedOperationString
             }
         }
+        print(self.operationString)
     }
 
     func encode(to encoder: Encoder) throws {
@@ -53,7 +54,7 @@ extension GraphQLOperation {
         GraphQLOperation("{cityAndRates {country currency threeLetterCode id name}}")
     }
     
-    static func WEATHER(forCity cityName: String) -> Self {
-        GraphQLOperation("{weather(filter: {cityName: $cityName}) {current {temperatureCelcius temperatureFarenheit condition {text icon}}forecast {forecasts {date day {maxTemperatureCelcius maxTemperatureFarenheit minTemperatureCelcius minTemperatureFarenheit averageTemperatureCelcius averageTemperatureFarenheit condition {text icon}}}}}}", variables: [cityName])
+    static func WEATHER(latitude: Double, longitude: Double) -> Self {
+        GraphQLOperation("{weatherByLocation(filter: {latitude: $latitude, longitude: $longitude}) {hourly {time temperature windSpeed relativeHumidity}}}", variables: [latitude, longitude])
     }
 }
