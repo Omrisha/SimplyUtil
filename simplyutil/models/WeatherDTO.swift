@@ -8,16 +8,6 @@
 import Foundation
 
 struct WeatherDTO: Codable {
-    let current: CurrentDTO
-    let forecast: ForecastDTO
-    
-    enum CodingKeys: String, CodingKey {
-        case current = "current"
-        case forecast = "forecast"
-    }    
-}
-
-struct WeatherByLocationDTO: Codable {
     let hourly: Hourly
 
     struct Hourly: Codable {

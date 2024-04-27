@@ -10,10 +10,12 @@ import SwiftUI
 struct ForecastsDTO: Identifiable, Codable {
     var id = UUID()
     let date: Date
-    let day: DayDTO
+    let averageTemperatureCelsius: Float
+    let averageTemperatureFarenheit: Float
     
     enum CodingKeys: String, CodingKey {
         case date = "date"
-        case day = "day"
+        case averageTemperatureCelsius = "averageTemperatureCelcius"
+        case averageTemperatureFarenheit = "averageTemperatureFarenheit"
     }
 }

@@ -80,7 +80,7 @@ class WebService {
             let longitude: Double = location?.coordinate.longitude ?? 0.0
             let latitude: Double = location?.coordinate.latitude ?? 0.0
             
-            let itemData: WeatherByLocationDTO = try await self.api.performOperation(GraphQLOperation.WEATHER(latitude:  latitude, longitude: longitude))
+            let itemData: WeatherDTO = try await self.api.performOperation(GraphQLOperation.WEATHER(latitude:  latitude, longitude: longitude))
             
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"

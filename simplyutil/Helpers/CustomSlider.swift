@@ -7,32 +7,45 @@
 
 import SwiftUI
 
-struct CustomSlider: View {
-    @Binding var value:CGFloat
-    private var maxValue:CGFloat
+struct SliderView: View {
+    var currentTemperature: CGFloat
+    var minTemperature: CGFloat
+    var maxTemperature: CGFloat
     
-    init(value: Binding<CGFloat>, maxValue: CGFloat) {
-        self._value = value
-        self.maxValue = maxValue
-    }
     var body: some View {
-        GeometryReader{ proxy in
-            ZStack(alignment: .center){
-                Capsule()
-                    .foregroundColor(.secondary)
+        ZStack(alignment: .leading) {
+            RoundedRectangle(cornerRadius: 10)
+                .frame(width: 150, height: 10)
+                .foregroundColor(.gray.opacity(0.3))
+            
+            RoundedRectangle(cornerRadius: 10)
+                .frame(width: widthForTemperature(current: currentTemperature, in: 150), height: 10)
+                .foregroundColor(.orange)
                 
-                Capsule()
-                    .fill(LinearGradient(gradient: .init(colors: [.teal,.orange]), startPoint: .leading, endPoint: .trailing))
-                    .frame(width: proxy.size.width * (CGFloat(value) / CGFloat(maxValue)))
-                    .contentShape(.capsule)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .overlay(.white, in: Capsule().stroke(style: .init()))
-                
-            }
+            Circle() // The slider "thumb"
+                .frame(width: 10, height: 10)
+                .foregroundColor(.white)
+                .shadow(radius: 3)
+                .offset(x: offsetForTemperature(current: currentTemperature, in: 150) - 5)
         }
+        .frame(height: 10)
+    }
+    
+    // Calculate width based on current temperature
+    private func widthForTemperature(current: CGFloat, in totalWidth: CGFloat) -> CGFloat {
+        let range = maxTemperature - minTemperature
+        let normalizedTemp = current - minTemperature
+        return (normalizedTemp / range) * totalWidth
+    }
+    
+    // Calculate the offset for the slider "thumb"
+    private func offsetForTemperature(current: CGFloat, in totalWidth: CGFloat) -> CGFloat {
+        let range = maxTemperature - minTemperature
+        let normalizedTemp = current - minTemperature
+        return (normalizedTemp / range) * totalWidth
     }
 }
 
 #Preview {
-    CustomSlider(value: Binding.constant(CGFloat(10)), maxValue: CGFloat(100))
+    SliderView(currentTemperature: 20, minTemperature: 15, maxTemperature: 40)
 }

@@ -14,14 +14,17 @@ struct ForecastView: View {
     @Binding var tempKind: Bool
     
     var body: some View {
-        VStack {
-            CardWeatherView(weather: currentWeather, title: "Temperature", titleImage: "thermometer.sun", tempKind: $tempKind)
-            CardWeatherView(weather: currentWeather, title: "Wind", titleImage: "wind", tempKind: $tempKind)
-            CardWeatherView(weather: currentWeather, title: "Humidity", titleImage: "humidity", tempKind: $tempKind)
-            
-            ForecastsListView(forecasts: forecasts, tempKind: $tempKind)
-                .cornerRadius(10)
-                .padding()
+        GeometryReader { geometry in
+            ScrollView(.vertical) {
+                LazyVGrid(columns: [GridItem(.fixed(geometry.size.width))], content: {
+                    CardWeatherView(weather: currentWeather, title: "Temperature", titleImage: "thermometer.sun", tempKind: $tempKind)
+                    CardWeatherView(weather: currentWeather, title: "Wind", titleImage: "wind", tempKind: $tempKind)
+                    CardWeatherView(weather: currentWeather, title: "Humidity", titleImage: "humidity", tempKind: $tempKind)
+                    ForecastRowCell(
+                        forecasts: forecasts.sorted { $0.date.get(.day) < $1.date.get(.day) },
+                        tempType: $tempKind)
+                })
+            }.frame(width: geometry.size.width, height: geometry.size.height)
         }
         .onAppear {
             Task.init {
@@ -50,13 +53,22 @@ struct ForecastView: View {
         self.forecasts = futureForecasts.map { forecast in
             let celsius = forecast.value.map{$0.temperature}
             let farenheit = forecast.value.map{$0.fahrenheit}
-            let avgCelsius = Int(celsius.sum()) / celsius.count
-            let avgFarenheit = Int(farenheit.sum()) / farenheit.count
-            return ForecastsDTO(date: formatter.date(from: forecast.key)!, day: DayDTO(maxTemperatureCelsius: celsius.max()!, maxTemperatureFarenheit: farenheit.max()!, minTemperatureCelsius: celsius.min()!, minTemperatureFarenheit: farenheit.min()!, averageTemperatureCelsius: avgCelsius, averageTemperatureFarenheit: avgFarenheit))
+            let avgCelsius = celsius.reduce(CGFloat.zero) { $0 + CGFloat($1) } / CGFloat(celsius.count)
+            let avgFarenheit = farenheit.reduce(CGFloat.zero) { $0 + CGFloat($1) } / CGFloat(farenheit.count)
+            return ForecastsDTO(date: formatter.date(from: forecast.key)!, averageTemperatureCelsius: Float(avgCelsius), averageTemperatureFarenheit: Float(avgFarenheit))
         }
     }
 }
 
 #Preview {
-    ForecastView(cityName: "Tel Aviv", currentWeather: [LocationWeatherDTO(dayOfTheWeek: "Wed", time: Date.now, temperature: 20, fahrenheit: 60, windSpeed: 39.8, relativeHumidity: 70)], tempKind: Binding.constant(true))
+    ForecastView(cityName: "Tel Aviv", forecasts: forecasts, currentWeather: [LocationWeatherDTO(dayOfTheWeek: "Wed", time: Date.now, temperature: 20, fahrenheit: 60, windSpeed: 39.8, relativeHumidity: 70)], tempKind: Binding.constant(true))
 }
+
+#if DEBUG
+let forecasts: [ForecastsDTO] = [
+    ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56),
+    ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56),
+    ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56),
+    ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56)
+]
+#endif
