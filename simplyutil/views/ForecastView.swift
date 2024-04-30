@@ -41,7 +41,7 @@ struct ForecastView: View {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         
-        let temp = weatherForecasts.filter { $0.time.get(.day) > now.get(.day) && $0.time.get(.month) >= now.get(.month)}
+        let temp = weatherForecasts.filter { $0.time.get(.month) >= now.get(.month)}
         let futureForecasts = temp
             .reduce([String: [LocationWeatherDTO]]()) { (dict, item) -> [String: [LocationWeatherDTO]] in
                 var dict = dict
@@ -61,14 +61,10 @@ struct ForecastView: View {
 }
 
 #Preview {
-    ForecastView(cityName: "Tel Aviv", forecasts: forecasts, currentWeather: [LocationWeatherDTO(dayOfTheWeek: "Wed", time: Date.now, temperature: 20, fahrenheit: 60, windSpeed: 39.8, relativeHumidity: 70)], tempKind: Binding.constant(true))
+    ForecastView(cityName: "Tel Aviv", forecasts: [
+        ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56),
+        ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56),
+        ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56),
+        ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56)
+    ], currentWeather: [LocationWeatherDTO(dayOfTheWeek: "Wed", time: Date.now, temperature: 20, fahrenheit: 60, windSpeed: 39.8, relativeHumidity: 70)], tempKind: Binding.constant(true))
 }
-
-#if DEBUG
-let forecasts: [ForecastsDTO] = [
-    ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56),
-    ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56),
-    ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56),
-    ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56)
-]
-#endif

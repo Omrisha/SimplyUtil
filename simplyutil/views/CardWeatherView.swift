@@ -41,13 +41,13 @@ struct CardWeatherView: View {
                                         Text("\((String(format: "%.2f", today.windSpeed)))")
                                             .font(.subheadline)
                                     case "Temperature":
-                                    Text("\((String(format: "%.2f", self.tempKind ? today.temperature : today.fahrenheit)))°")
+                                    Text("\(Int(self.tempKind ? today.temperature : today.fahrenheit))°")
                                             .font(.subheadline)
                                     case "Humidity":
-                                        Text("\((String(format: "%.2f", today.relativeHumidity)))")
+                                        Text("\(today.relativeHumidity)")
                                             .font(.subheadline)
                                     default:
-                                        Text("\((String(format: "%.2f", today.temperature)))")
+                                        Text("\(Int(self.tempKind ? today.temperature : today.fahrenheit))")
                                             .font(.subheadline)
                                 }
                             }

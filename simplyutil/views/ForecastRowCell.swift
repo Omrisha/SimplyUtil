@@ -11,7 +11,6 @@ import SwiftUI
 struct ForecastRowCell: View {
     var forecasts: [ForecastsDTO]
     @Binding var tempType: Bool
-    @State private var dayOfTheWeek: String = ""
     
     var body: some View {
         ZStack {
@@ -33,7 +32,7 @@ struct ForecastRowCell: View {
                             VStack {
                                 Text(forecast.date.getTodayWeekDay())
                                     .font(.title2)
-                                Text("\(Int(tempType ? forecast.averageTemperatureCelsius :forecast.averageTemperatureCelsius))°")
+                                Text("\(Int(self.tempType ? forecast.averageTemperatureCelsius :forecast.averageTemperatureFarenheit))°")
                             }
                         }
                     }
@@ -44,6 +43,11 @@ struct ForecastRowCell: View {
 }
 
 #Preview {
-    ForecastRowCell(forecasts: forecasts, tempType: Binding.constant(true))
+    ForecastRowCell(forecasts: [
+        ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56),
+        ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56),
+        ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56),
+        ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56)
+    ], tempType: Binding.constant(true))
 }
 
