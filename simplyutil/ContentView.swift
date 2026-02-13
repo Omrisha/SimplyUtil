@@ -10,73 +10,115 @@ import SwiftData
 
 @available(iOS 17.0, *)
 struct ContentView: View {
-    @Environment(\.modelContext) var modelContext
-    @Query(sort: \FavoriteEntity.id) var favorites: [FavoriteEntity]
-    @State var addCity = false
-    @State private var swipedItemId: Int?
-    @State var searchQuery: String = ""
+    @Environment(\.modelContext) private var modelContext
+    @Query(sort: \FavoriteEntity.name) private var favorites: [FavoriteEntity]
+    @State private var isAddingCity = false
+    @State private var searchQuery = ""
     
-    let columns = [
-        GridItem(.adaptive(minimum: 150, maximum: 150)),
-        GridItem(.adaptive(minimum: 150, maximum: 150))
-    ]
-    
-    var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(favorites) { item in
-                    NavigationLink {
-                        CityDetailView(city: item)
-                    } label: {
-                        CityRow(cityData: item)
-                    }
-                }
-                .onDelete(perform: delete)
-            }
-            .listStyle(GroupedListStyle())
-            .navigationTitle("Favorite Places")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        self.addCity.toggle()
-                    }, label: {
-                        Image(systemName: "plus.app")
-                            .font(.title2.weight(.medium))
-                    })
-                    .sheet(isPresented: self.$addCity, content: {
-                        CitiesListView()
-                    })
-                }
-            }
-            .accentColor(.primary)
-        } detail: {
-            Text("Select a favorite")
+    // Filtered favorites based on search
+    private var filteredFavorites: [FavoriteEntity] {
+        if searchQuery.isEmpty {
+            return favorites
+        }
+        return favorites.filter { favorite in
+            favorite.name.localizedCaseInsensitiveContains(searchQuery) ||
+            favorite.country.localizedCaseInsensitiveContains(searchQuery)
         }
     }
     
-    func delete(at offsets: IndexSet) {
-        for offset in offsets {
-            // find this book in our query
-            let favorite = favorites[offset]
-
-            // delete it from the context
+    var body: some View {
+        NavigationSplitView {
+            Group {
+                if filteredFavorites.isEmpty {
+                    ContentUnavailableView {
+                        Label("No Favorites", systemImage: "star.slash")
+                    } description: {
+                        Text(searchQuery.isEmpty ? 
+                             "Add your favorite cities to get started" : 
+                             "No cities match '\(searchQuery)'")
+                    } actions: {
+                        if searchQuery.isEmpty {
+                            Button("Add City") {
+                                isAddingCity = true
+                            }
+                            .buttonStyle(.borderedProminent)
+                        }
+                    }
+                } else {
+                    List {
+                        ForEach(filteredFavorites) { item in
+                            NavigationLink {
+                                CityDetailView(city: item)
+                            } label: {
+                                CityRow(cityData: item)
+                            }
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                Button(role: .destructive) {
+                                    deleteFavorite(item)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
+                        }
+                        .onDelete(perform: delete)
+                    }
+                    .listStyle(.insetGrouped)
+                    .searchable(text: $searchQuery, prompt: "Search cities or countries")
+                }
+            }
+            .navigationTitle("Favorite Places")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        isAddingCity = true
+                    } label: {
+                        Label("Add City", systemImage: "plus")
+                    }
+                }
+                
+                ToolbarItem(placement: .topBarLeading) {
+                    if !favorites.isEmpty {
+                        EditButton()
+                    }
+                }
+            }
+            .sheet(isPresented: $isAddingCity) {
+                CitiesListView()
+            }
+        } detail: {
+            ContentUnavailableView {
+                Label("Select a Favorite", systemImage: "star")
+            } description: {
+                Text("Choose a city from your favorites to see more details")
+            }
+        }
+    }
+    
+    // MARK: - Private Methods
+    
+    private func delete(at offsets: IndexSet) {
+        withAnimation {
+            for offset in offsets {
+                let favorite = filteredFavorites[offset]
+                modelContext.delete(favorite)
+            }
+        }
+    }
+    
+    private func deleteFavorite(_ favorite: FavoriteEntity) {
+        withAnimation {
             modelContext.delete(favorite)
         }
     }
 }
 
-#Preview {
-    do {
-        let config = ModelConfiguration(isStoredInMemoryOnly: true)
-        let container = try ModelContainer(for: FavoriteEntity.self, CityEntity.self, configurations: config)
-        let sampleObject = CityEntity(id: 1, name: "Rishon LeZion", threeLetterCode: "ISR", currency: "ILS", country: "Israel")
-        let favorite = FavoriteEntity(id: 1, name: "Ramat Gan", threeLetterCode: "ISR", currency: "ILS", country: "Israel", isFavorite: true)
-        let favorite2 = FavoriteEntity(id: 1, name: "Rishon LeZion", threeLetterCode: "ISR", currency: "ILS", country: "Israel", isFavorite: true)
-        container.mainContext.insert(sampleObject)
-        container.mainContext.insert(favorite)
-        container.mainContext.insert(favorite2)
-        return ContentView().modelContainer(container)
-    } catch {
-        fatalError("Failed to create model container")
-    }
+#Preview("With Favorites") {
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: FavoriteEntity.self, configurations: config)
+    let favorites = [
+        FavoriteEntity(id: 1, name: "Ramat Gan", threeLetterCode: "ISR", currency: "ILS", country: "Israel", isFavorite: true),
+        FavoriteEntity(id: 2, name: "Tel Aviv", threeLetterCode: "ISR", currency: "ILS", country: "Israel", isFavorite: true)
+    ]
+    favorites.forEach { container.mainContext.insert($0) }
+    return ContentView().modelContainer(container)
 }

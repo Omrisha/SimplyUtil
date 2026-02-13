@@ -9,68 +9,156 @@ import SwiftUI
 import SwiftData
 
 struct CurrencyListView: View {
-    @Query(sort: \FavoriteEntity.id) var favorites: [FavoriteEntity]
-    var currency: String = "USD"
-    @State var currencyToRate: [String: Double] = [:]
-    @State var rates: [String: Double] = [:]
-    @State var amount: Double?
-    @FocusState private var focusedField: Bool
+    let currency: String
+    
+    @Query(sort: \FavoriteEntity.name) private var favorites: [FavoriteEntity]
+    @State private var currencyToRate: [String: Double] = [:]
+    @State private var amount: Double?
+    @State private var isLoading = false
+    @State private var error: Error?
+    @FocusState private var isFocused: Bool
+    
+    private var relevantCurrencies: [String] {
+        favorites
+            .filter { $0.currency != currency }
+            .map { $0.currency }
+            .uniqued()
+            .sorted()
+    }
     
     var body: some View {
         List {
-            Section("From") {
-                HStack {
+            Section {
+                HStack(spacing: 12) {
                     Image(currency)
                         .resizable()
-                        .frame(width: 45, height: 45)
-                    TextField("Enter amount", value: $amount, format: .number)
-                        .keyboardType(.numberPad)
-                        .multilineTextAlignment(.center)
-                        .font(.largeTitle)
-                        .padding([.trailing, .leading])
-                        .focused($focusedField)
-                    .toolbar {
-                        ToolbarItem(placement: .keyboard) {
-                            Button("Done") {
-                                focusedField = false
+                        .frame(width: 50, height: 50)
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                    
+                    TextField(
+                        "Enter amount",
+                        value: $amount,
+                        format: .number
+                    )
+                    .keyboardType(.decimalPad)
+                    .multilineTextAlignment(.trailing)
+                    .font(.system(.title, design: .rounded, weight: .semibold))
+                    .focused($isFocused)
+                    
+                    Text(Currency.currency(for: currency)?.shortestSymbol ?? currency)
+                        .font(.system(.title, design: .rounded, weight: .semibold))
+                        .foregroundStyle(.secondary)
+                }
+                .padding(.vertical, 8)
+            } header: {
+                Text("From")
+            }
+            
+            if isLoading {
+                Section {
+                    HStack {
+                        ProgressView()
+                        Text("Loading exchange rates...")
+                            .foregroundStyle(.secondary)
+                    }
+                }
+            } else if let error = error {
+                Section {
+                    ContentUnavailableView {
+                        Label("Unable to Load Rates", systemImage: "exclamationmark.triangle")
+                    } description: {
+                        Text(error.localizedDescription)
+                    } actions: {
+                        Button("Try Again") {
+                            Task {
+                                await loadRates(for: currency)
                             }
                         }
                     }
-                    Text("\(Currency.currency(for: currency)!.shortestSymbol)")
-                        .font(.largeTitle)
                 }
-            }
-            Section("To") {
-                ForEach(rates.sorted(by: >), id: \.key) { key, value in
-                    
-                    HStack {
-                        Image(key)
-                            .resizable()
-                            .frame(width: 45, height: 45)
-                        Text("\((self.amount ?? 0) * (self.currencyToRate[key] ?? 0), specifier: "%.2f")\(Currency.currency(for: key)!.shortestSymbol)")
-                            .font(.title)
-                            .frame(maxWidth: .infinity, alignment: .center)
+            } else if relevantCurrencies.isEmpty {
+                Section {
+                    ContentUnavailableView(
+                        "No Other Currencies",
+                        systemImage: "banknote",
+                        description: Text("Add favorite cities with different currencies to see exchange rates")
+                    )
+                }
+            } else {
+                Section {
+                    ForEach(relevantCurrencies, id: \.self) { targetCurrency in
+                        HStack(spacing: 12) {
+                            Image(targetCurrency)
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                            
+                            Spacer()
+                            
+                            if let rate = currencyToRate[targetCurrency] {
+                                let convertedAmount = (amount ?? 0) * rate
+                                let symbol = Currency.currency(for: targetCurrency)?.shortestSymbol ?? targetCurrency
+                                Text("\(convertedAmount, specifier: "%.2f") \(symbol)")
+                                    .font(.system(.title2, design: .rounded, weight: .medium))
+                                    .foregroundStyle(convertedAmount > 0 ? .primary : .secondary)
+                            } else {
+                                Text("—")
+                                    .font(.system(.title2, design: .rounded))
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                        .padding(.vertical, 4)
+                    }
+                } header: {
+                    Text("To")
+                } footer: {
+                    if !currencyToRate.isEmpty {
+                        Text("Exchange rates are approximate and may vary")
+                            .font(.caption)
                     }
                 }
             }
         }
-        .onAppear {
-            self.rates = favorites.filter { $0.currency != currency }.reduce([String: Double]()) { (dict, item) -> [String: Double] in
-                var dict = dict
-                dict[item.currency] = 0.0
-                return dict
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") {
+                    isFocused = false
+                }
             }
-            
-            Task.init{
-                await loadRates(for: currency)
-            }
+        }
+        .refreshable {
+            await loadRates(for: currency)
+        }
+        .task {
+            await loadRates(for: currency)
         }
     }
     
-    func loadRates(for currency: String) async {
-        if let rates = await WebService().fetchRates(currency: currency) {
-            self.currencyToRate = rates.rates
+    // MARK: - Private Methods
+    
+    private func loadRates(for currency: String) async {
+        isLoading = true
+        error = nil
+        
+        defer { isLoading = false }
+        
+        do {
+            if let rateData = await WebService().fetchRates(currency: currency) {
+                self.currencyToRate = rateData.rates
+            }
+        } catch {
+            self.error = error
         }
+    }
+}
+
+// MARK: - Array Extension
+
+extension Array where Element: Hashable {
+    func uniqued() -> [Element] {
+        var seen = Set<Element>()
+        return filter { seen.insert($0).inserted }
     }
 }
 

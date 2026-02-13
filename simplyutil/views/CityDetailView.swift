@@ -9,34 +9,60 @@ import SwiftUI
 import Combine
 
 struct CityDetailView: View {
-    var city: FavoriteEntity
-    @State var amount: Double?
-    @State private var temperatureKind: Bool = true
-    @State private var selectedTab: Int = 0
+    let city: FavoriteEntity
+    
+    @State private var temperatureKind = true
+    @State private var selectedTab = 0
+    @State private var navigationPath = NavigationPath()
+    @State private var cachedLandmarks: [Landmark]?
+    @State private var isLoadingLandmarks = false
+    
     var body: some View {
         TabView(selection: $selectedTab) {
             CurrencyListView(currency: city.currency)
-            .tabItem {
-                Label("Rates", systemImage: "dollarsign.arrow.circlepath")
-            }.tag(0)
-            ForecastView(cityName: city.name, tempKind: $temperatureKind)
-            .tabItem {
-                Label("Weather", systemImage: "sun.max.circle")
-            }.tag(1)
-            LandmarkList(cityName: city.name, country: city.country)
                 .tabItem {
-                    Label("Recommendation", systemImage: "checkmark.seal")
-                }.tag(2)
+                    Label("Rates", systemImage: "dollarsign.arrow.circlepath")
+                }
+                .tag(0)
+            
+            ForecastView(cityName: city.name, tempKind: $temperatureKind)
+                .tabItem {
+                    Label("Weather", systemImage: "cloud.sun")
+                }
+                .tag(1)
+            
+            NavigationStack(path: $navigationPath) {
+                LandmarkList(
+                    cityName: city.name,
+                    country: city.country,
+                    cachedLandmarks: $cachedLandmarks,
+                    isLoadingLandmarks: $isLoadingLandmarks
+                )
+                .navigationDestination(for: Landmark.self) { landmark in
+                    LandmarkDetail(landmark: landmark)
+                }
+            }
+            .tabItem {
+                Label("Places", systemImage: "map")
+            }
+            .tag(2)
+            .onChange(of: selectedTab) { oldValue, newValue in
+                if newValue != 2 {
+                    navigationPath.removeLast(navigationPath.count)
+                }
+            }
         }
-        .navigationBarTitle("\(city.name), \(city.threeLetterCode)")
-        .toolbar{
+        .navigationTitle(city.name)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
             if selectedTab == 1 {
-                ToolbarItem(placement: .navigationBarTrailing){
-                    Toggle(isOn: $temperatureKind) {
-                        Text(temperatureKind ? "C" : "F")
-                            .fontWeight(.bold)
+                ToolbarItem(placement: .topBarTrailing) {
+                    Picker("Temperature Unit", selection: $temperatureKind) {
+                        Text("°C").tag(true)
+                        Text("°F").tag(false)
                     }
-                    .toggleStyle(.switch)
+                    .pickerStyle(.segmented)
+                    .frame(width: 100)
                 }
             }
         }

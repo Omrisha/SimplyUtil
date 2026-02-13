@@ -8,63 +8,137 @@
 import SwiftUI
 
 struct ForecastView: View {
-    var cityName: String
-    @State var forecasts: [ForecastsDTO] = []
-    @State var currentWeather: [LocationWeatherDTO] = []
+    let cityName: String
     @Binding var tempKind: Bool
     
+    @State private var forecasts: [ForecastsDTO] = []
+    @State private var currentWeather: [LocationWeatherDTO] = []
+    @State private var isLoading = false
+    @State private var error: Error?
+    
+    private var sortedForecasts: [ForecastsDTO] {
+        forecasts.sorted { $0.date < $1.date }
+    }
+    
     var body: some View {
-        GeometryReader { geometry in
-            ScrollView(.vertical) {
-                LazyVGrid(columns: [GridItem(.fixed(geometry.size.width))], content: {
-                    CardWeatherView(weather: currentWeather, title: "Temperature", titleImage: "thermometer.sun", tempKind: $tempKind)
-                    CardWeatherView(weather: currentWeather, title: "Wind", titleImage: "wind", tempKind: $tempKind)
-                    CardWeatherView(weather: currentWeather, title: "Humidity", titleImage: "humidity", tempKind: $tempKind)
-                    ForecastRowCell(
-                        forecasts: forecasts.sorted { $0.date.get(.day) < $1.date.get(.day) },
-                        tempType: $tempKind)
-                })
-            }.frame(width: geometry.size.width, height: geometry.size.height)
-        }
-        .onAppear {
-            Task.init {
-                await loadForecast(for: cityName)
+        Group {
+            if isLoading && currentWeather.isEmpty {
+                ProgressView("Loading weather data...")
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else if let error = error {
+                ContentUnavailableView {
+                    Label("Unable to Load Weather", systemImage: "cloud.slash")
+                } description: {
+                    Text(error.localizedDescription)
+                } actions: {
+                    Button("Try Again") {
+                        Task {
+                            await loadForecast(for: cityName)
+                        }
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+            } else if currentWeather.isEmpty {
+                ContentUnavailableView(
+                    "No Weather Data",
+                    systemImage: "cloud.slash",
+                    description: Text("Weather information is not available for \(cityName)")
+                )
+            } else {
+                ScrollView {
+                    LazyVStack(spacing: 16) {
+                        CardWeatherView(
+                            weather: currentWeather,
+                            title: "Temperature",
+                            titleImage: "thermometer.sun",
+                            tempKind: $tempKind
+                        )
+                        
+                        CardWeatherView(
+                            weather: currentWeather,
+                            title: "Wind",
+                            titleImage: "wind",
+                            tempKind: $tempKind
+                        )
+                        
+                        CardWeatherView(
+                            weather: currentWeather,
+                            title: "Humidity",
+                            titleImage: "humidity",
+                            tempKind: $tempKind
+                        )
+                        
+                        ForecastRowCell(
+                            forecasts: sortedForecasts,
+                            tempType: $tempKind
+                        )
+                    }
+                    .padding()
+                }
+                .refreshable {
+                    await loadForecast(for: cityName)
+                }
             }
+        }
+        .task {
+            await loadForecast(for: cityName)
         }
     }
     
-    func loadForecast(for cityName: String) async {
-        let now = Date.now
-        let weatherForecasts = await WebService().fetchWeather(cityName: cityName)
-        self.currentWeather = weatherForecasts.filter { $0.time.get(.day) == now.get(.day) && $0.time.get(.month) == now.get(.month) && $0.time.get(.hour) >= now.get(.hour)}
+    // MARK: - Private Methods
+    
+    private func loadForecast(for cityName: String) async {
+        isLoading = true
+        error = nil
         
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
+        defer { isLoading = false }
         
-        let temp = weatherForecasts.filter { $0.time.get(.month) >= now.get(.month)}
-        let futureForecasts = temp
-            .reduce([String: [LocationWeatherDTO]]()) { (dict, item) -> [String: [LocationWeatherDTO]] in
-                var dict = dict
-                let key = formatter.string(from: item.time)
-                dict[key, default: []].append(item)
-                return dict
+        do {
+            let now = Date.now
+            let weatherForecasts = await WebService().fetchWeather(cityName: cityName)
+            
+            // Filter current day weather
+            self.currentWeather = weatherForecasts.filter { weather in
+                Calendar.current.isDate(weather.time, inSameDayAs: now) &&
+                weather.time.get(.hour) >= now.get(.hour)
             }
-        
-        self.forecasts = futureForecasts.map { forecast in
-            let celsius = forecast.value.map{$0.temperature}
-            let farenheit = forecast.value.map{$0.fahrenheit}
-            let avgCelsius = celsius.reduce(CGFloat.zero) { $0 + CGFloat($1) } / CGFloat(celsius.count)
-            let avgFarenheit = farenheit.reduce(CGFloat.zero) { $0 + CGFloat($1) } / CGFloat(farenheit.count)
-            return ForecastsDTO(date: formatter.date(from: forecast.key)!, averageTemperatureCelsius: Float(avgCelsius), averageTemperatureFarenheit: Float(avgFarenheit))
+            
+            // Process future forecasts
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd"
+            
+            let futureWeather = weatherForecasts.filter { weather in
+                weather.time >= now
+            }
+            
+            let groupedByDate = Dictionary(grouping: futureWeather) { weather in
+                formatter.string(from: weather.time)
+            }
+            
+            self.forecasts = groupedByDate.compactMap { dateString, weatherData in
+                guard let date = formatter.date(from: dateString) else { return nil }
+                
+                let temperatures = weatherData.map { Double($0.temperature) }
+                let fahrenheits = weatherData.map { Double($0.fahrenheit) }
+                
+                let avgCelsius = temperatures.reduce(0.0, +) / Double(temperatures.count)
+                let avgFahrenheit = fahrenheits.reduce(0.0, +) / Double(fahrenheits.count)
+                
+                return ForecastsDTO(
+                    date: date,
+                    averageTemperatureCelsius: Float(avgCelsius),
+                    averageTemperatureFarenheit: Float(avgFahrenheit)
+                )
+            }
+        } catch {
+            self.error = error
         }
     }
 }
 
 #Preview {
-    ForecastView(cityName: "Tel Aviv", forecasts: [
-        ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56),
-        ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56),
-        ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56),
-        ForecastsDTO(date: Date.now, averageTemperatureCelsius: 22, averageTemperatureFarenheit: 56)
-    ], currentWeather: [LocationWeatherDTO(dayOfTheWeek: "Wed", time: Date.now, temperature: 20, fahrenheit: 60, windSpeed: 39.8, relativeHumidity: 70)], tempKind: Binding.constant(true))
+    ForecastView(
+        cityName: "Tel Aviv",
+        tempKind: .constant(true)
+    )
 }

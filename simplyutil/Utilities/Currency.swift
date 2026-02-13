@@ -35,7 +35,7 @@ struct Currency {
           guard let currencyCode = locale.currency?.identifier, let currencySymbol = locale.currencySymbol else {
             continue
          }
-         if currencyCode.contains(currencyCode) {
+         if currencyCodes.contains(currencyCode) {
             mapCurrencyCode2Symbols[currencyCode, default: []].insert(currencySymbol)
          }
       }

@@ -57,6 +57,7 @@
 		B2E46A962BAB54400032C75C /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E46A952BAB54400032C75C /* WebService.swift */; };
 		B2E6FE4B2BB867BF0061B779 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E6FE4A2BB867BF0061B779 /* Environment.swift */; };
 		B2E6FE4E2BB87A040061B779 /* DetailedGrimItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E6FE4D2BB87A040061B779 /* DetailedGrimItemView.swift */; };
+		B2FD3A4A2F3F8E1F00076E21 /* UnifiedAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FD3A492F3F8E1F00076E21 /* UnifiedAPIClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +133,7 @@
 		B2E6FE4A2BB867BF0061B779 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		B2E6FE4C2BB869170061B779 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B2E6FE4D2BB87A040061B779 /* DetailedGrimItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedGrimItemView.swift; sourceTree = "<group>"; };
+		B2FD3A492F3F8E1F00076E21 /* UnifiedAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnifiedAPIClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +172,7 @@
 				B20F82AD2BB71D5300C2CBD1 /* GridItemView.swift */,
 				B20F82AF2BB71E4C00C2CBD1 /* LandmarkPhotoGallery.swift */,
 				B2E6FE4D2BB87A040061B779 /* DetailedGrimItemView.swift */,
+				B2FD3A492F3F8E1F00076E21 /* UnifiedAPIClient.swift */,
 			);
 			path = Landmarks;
 			sourceTree = "<group>";
@@ -404,6 +407,9 @@
 				Base,
 			);
 			mainGroup = B2B6E59327301B8000D30397;
+			packageReferences = (
+				B2AE5EA32D1EE26600C2AB0F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = B2B6E59D27301B8000D30397 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -491,6 +497,7 @@
 				B20F82B02BB71E4C00C2CBD1 /* LandmarkPhotoGallery.swift in Sources */,
 				B299AE3F2BACCD93009A6D8D /* CitiesListView.swift in Sources */,
 				B299AE4F2BB4A02C009A6D8D /* RateDTO.swift in Sources */,
+				B2FD3A4A2F3F8E1F00076E21 /* UnifiedAPIClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -849,6 +856,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B2AE5EA32D1EE26600C2AB0F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = B2B6E59427301B8000D30397 /* Project object */;
 }
