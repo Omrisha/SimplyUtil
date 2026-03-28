@@ -17,15 +17,6 @@ class UnifiedAPIClient {
     
     static let shared = UnifiedAPIClient()
     
-    // Custom URLSession with longer timeout to prevent cancellation
-    private lazy var session: URLSession = {
-        let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = 30  // 30 seconds timeout
-        config.timeoutIntervalForResource = 60  // 60 seconds for the entire resource
-        config.waitsForConnectivity = true
-        return URLSession(configuration: config)
-    }()
-    
     private init() {}
     
     // MARK: - Cities
@@ -37,7 +28,7 @@ class UnifiedAPIClient {
             throw URLError(.badURL)
         }
         
-        let (data, response) = try await session.data(from: url)
+        let (data, response) = try await URLSession.shared.data(from: url)
         
         guard let httpResponse = response as? HTTPURLResponse,
               httpResponse.statusCode == 200 else {
@@ -92,7 +83,7 @@ class UnifiedAPIClient {
             throw URLError(.badURL)
         }
         
-        let (data, response) = try await session.data(from: url)
+        let (data, response) = try await URLSession.shared.data(from: url)
         
         guard let httpResponse = response as? HTTPURLResponse,
               httpResponse.statusCode == 200 else {
@@ -117,7 +108,7 @@ class UnifiedAPIClient {
         
         print("📊 Fetching rates for \(currency) from: \(endpoint)")
         
-        let (data, response) = try await session.data(from: url)
+        let (data, response) = try await URLSession.shared.data(from: url)
         
         guard let httpResponse = response as? HTTPURLResponse else {
             throw URLError(.badServerResponse)

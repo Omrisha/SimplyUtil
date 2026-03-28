@@ -39,7 +39,10 @@ struct LandmarkList: View {
         }
         .navigationTitle("Landmarks")
         .task {
-            await fetchLandmarks()
+            // Only fetch if we don't have cached data
+            if cachedLandmarks == nil {
+                await fetchLandmarks()
+            }
         }
     }
     
