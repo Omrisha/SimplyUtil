@@ -27,8 +27,16 @@ struct Landmark: Hashable, Codable {
     private let photos: [Photo]
     var images: [String] {
         photos.map { img in
-            print("\(displayName.text) -> https://places.googleapis.com/v1/\(img.name)/media?maxHeightPx=400&maxWidthPx=400&key=\(EnvironmentKeys.apiKey)")
-            return "https://places.googleapis.com/v1/\(img.name)/media?maxHeightPx=400&maxWidthPx=400&key=\(EnvironmentKeys.apiKey)" }
+            // Check if the photo name is already a complete URL
+            if img.name.hasPrefix("http://") || img.name.hasPrefix("https://") {
+                print("\(displayName.text) -> Direct URL: \(img.name)")
+                return img.name
+            } else {
+                // Google Places API photo reference
+                print("\(displayName.text) -> https://places.googleapis.com/v1/\(img.name)/media?maxHeightPx=400&maxWidthPx=400&key=\(EnvironmentKeys.apiKey)")
+                return "https://places.googleapis.com/v1/\(img.name)/media?maxHeightPx=400&maxWidthPx=400&key=\(EnvironmentKeys.apiKey)"
+            }
+        }
     }
     
     struct Location: Hashable, Codable {

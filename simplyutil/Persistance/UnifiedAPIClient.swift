@@ -140,6 +140,18 @@ class UnifiedAPIClient {
     // MARK: - Helper Conversion Functions
     
     private func convertServerLandmarkToLandmark(_ serverLandmark: ServerLandmark) -> Landmark? {
+        // Create a photo object if imageUrl is available
+        var photos: [[String: Any]] = []
+        if let imageUrl = serverLandmark.imageUrl, !imageUrl.isEmpty {
+            // For direct URLs, store them in the photo name field
+            // The Landmark.images property will detect and handle them
+            photos.append([
+                "name": imageUrl,
+                "widthPx": 400,
+                "heightPx": 400
+            ])
+        }
+        
         let jsonDict: [String: Any] = [
             "displayName": [
                 "text": serverLandmark.name,
@@ -152,7 +164,7 @@ class UnifiedAPIClient {
             ],
             "rating": serverLandmark.rating,
             "businessStatus": "OPERATIONAL",
-            "photos": [] as [[String: Any]]
+            "photos": photos
         ]
         
         do {
@@ -205,6 +217,7 @@ struct ServerLandmark: Codable {
     let latitude: Double
     let longitude: Double
     let rating: Double
+    let imageUrl: String?
 }
 
 struct ServerWeatherResponse: Codable {
