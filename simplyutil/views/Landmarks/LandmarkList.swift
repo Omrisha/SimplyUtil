@@ -27,9 +27,7 @@ struct LandmarkList: View {
                         .foregroundColor(.secondary)
                 } else {
                     ForEach(Array(landmarks.enumerated()), id: \.offset) { index, landmark in
-                        NavigationLink {
-                            LandmarkDetail(landmark: landmark)
-                        } label: {
+                        NavigationLink(value: landmark) {
                             LandmarkRow(landmark: landmark)
                         }
                     }
@@ -40,14 +38,8 @@ struct LandmarkList: View {
             }
         }
         .navigationTitle("Landmarks")
-        .refreshable {
-            await fetchLandmarks()
-        }
         .task {
-            // Only fetch if we don't have cached data
-            if cachedLandmarks == nil {
-                await fetchLandmarks()
-            }
+            await fetchLandmarks()
         }
     }
     
