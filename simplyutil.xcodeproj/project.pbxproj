@@ -26,9 +26,6 @@
 		B299AE2F2BAB6158009A6D8D /* WeatherDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299AE2E2BAB6158009A6D8D /* WeatherDTO.swift */; };
 		B299AE332BACAD91009A6D8D /* AsyncButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299AE322BACAD91009A6D8D /* AsyncButton.swift */; };
 		B299AE352BACB9DA009A6D8D /* URLSessionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299AE342BACB9DA009A6D8D /* URLSessionExtensions.swift */; };
-		B299AE372BACBA0E009A6D8D /* GraphQLOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299AE362BACBA0E009A6D8D /* GraphQLOperation.swift */; };
-		B299AE392BACBA39009A6D8D /* GraphQLResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299AE382BACBA39009A6D8D /* GraphQLResult.swift */; };
-		B299AE3B2BACBA62009A6D8D /* GraphQLAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299AE3A2BACBA62009A6D8D /* GraphQLAPI.swift */; };
 		B299AE3D2BACBD70009A6D8D /* FavoriteEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299AE3C2BACBD70009A6D8D /* FavoriteEntity.swift */; };
 		B299AE3F2BACCD93009A6D8D /* CitiesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299AE3E2BACCD93009A6D8D /* CitiesListView.swift */; };
 		B299AE432BAF06D6009A6D8D /* SwipableCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299AE422BAF06D6009A6D8D /* SwipableCard.swift */; };
@@ -97,9 +94,6 @@
 		B299AE2E2BAB6158009A6D8D /* WeatherDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDTO.swift; sourceTree = "<group>"; };
 		B299AE322BACAD91009A6D8D /* AsyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
 		B299AE342BACB9DA009A6D8D /* URLSessionExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionExtensions.swift; sourceTree = "<group>"; };
-		B299AE362BACBA0E009A6D8D /* GraphQLOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLOperation.swift; sourceTree = "<group>"; };
-		B299AE382BACBA39009A6D8D /* GraphQLResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLResult.swift; sourceTree = "<group>"; };
-		B299AE3A2BACBA62009A6D8D /* GraphQLAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphQLAPI.swift; sourceTree = "<group>"; };
 		B299AE3C2BACBD70009A6D8D /* FavoriteEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteEntity.swift; sourceTree = "<group>"; };
 		B299AE3E2BACCD93009A6D8D /* CitiesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitiesListView.swift; sourceTree = "<group>"; };
 		B299AE422BAF06D6009A6D8D /* SwipableCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipableCard.swift; sourceTree = "<group>"; };
@@ -172,7 +166,6 @@
 				B20F82AD2BB71D5300C2CBD1 /* GridItemView.swift */,
 				B20F82AF2BB71E4C00C2CBD1 /* LandmarkPhotoGallery.swift */,
 				B2E6FE4D2BB87A040061B779 /* DetailedGrimItemView.swift */,
-				B2FD3A492F3F8E1F00076E21 /* UnifiedAPIClient.swift */,
 			);
 			path = Landmarks;
 			sourceTree = "<group>";
@@ -181,9 +174,6 @@
 			isa = PBXGroup;
 			children = (
 				B299AE342BACB9DA009A6D8D /* URLSessionExtensions.swift */,
-				B299AE362BACBA0E009A6D8D /* GraphQLOperation.swift */,
-				B299AE382BACBA39009A6D8D /* GraphQLResult.swift */,
-				B299AE3A2BACBA62009A6D8D /* GraphQLAPI.swift */,
 				B299AE4A2BAF2B32009A6D8D /* DateExtensions.swift */,
 				B299AE502BB4B25F009A6D8D /* ViewExtensions.swift */,
 				B211ABBB2BB4C7EF0083A054 /* Currency.swift */,
@@ -196,6 +186,7 @@
 		B284104E27312ABF00EDA7D3 /* Persistance */ = {
 			isa = PBXGroup;
 			children = (
+				B2FD3A492F3F8E1F00076E21 /* UnifiedAPIClient.swift */,
 				B2E46A952BAB54400032C75C /* WebService.swift */,
 			);
 			path = Persistance;
@@ -456,12 +447,9 @@
 				B2C360FC273078DF00CE67F5 /* CustomTextField.swift in Sources */,
 				B2AA11E62BD8CE6000478B26 /* LocationWeatherDTO.swift in Sources */,
 				B299AE352BACB9DA009A6D8D /* URLSessionExtensions.swift in Sources */,
-				B299AE372BACBA0E009A6D8D /* GraphQLOperation.swift in Sources */,
 				B2E6FE4E2BB87A040061B779 /* DetailedGrimItemView.swift in Sources */,
-				B299AE3B2BACBA62009A6D8D /* GraphQLAPI.swift in Sources */,
 				B211ABD12BB5EBBC0083A054 /* LandmarkDetail.swift in Sources */,
 				B211ABBC2BB4C7EF0083A054 /* Currency.swift in Sources */,
-				B299AE392BACBA39009A6D8D /* GraphQLResult.swift in Sources */,
 				B2DBD6192BD18726008949C3 /* CitiesViewModel.swift in Sources */,
 				B211ABC02BB552B50083A054 /* CurrencyListView.swift in Sources */,
 				B299AE492BAF21B5009A6D8D /* ForecastsDTO.swift in Sources */,
