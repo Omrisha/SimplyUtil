@@ -27,7 +27,9 @@ struct LandmarkList: View {
                         .foregroundColor(.secondary)
                 } else {
                     ForEach(Array(landmarks.enumerated()), id: \.offset) { index, landmark in
-                        NavigationLink(value: landmark) {
+                        NavigationLink {
+                            LandmarkDetail(landmark: landmark)
+                        } label: {
                             LandmarkRow(landmark: landmark)
                         }
                     }

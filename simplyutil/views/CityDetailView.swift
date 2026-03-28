@@ -13,7 +13,6 @@ struct CityDetailView: View {
     
     @State private var temperatureKind = true
     @State private var selectedTab = 0
-    @State private var navigationPath = NavigationPath()
     @State private var cachedLandmarks: [Landmark]?
     @State private var isLoadingLandmarks = false
     
@@ -31,26 +30,16 @@ struct CityDetailView: View {
                 }
                 .tag(1)
             
-            NavigationStack(path: $navigationPath) {
-                LandmarkList(
-                    cityName: city.name,
-                    country: city.country,
-                    cachedLandmarks: $cachedLandmarks,
-                    isLoadingLandmarks: $isLoadingLandmarks
-                )
-                .navigationDestination(for: Landmark.self) { landmark in
-                    LandmarkDetail(landmark: landmark)
-                }
-            }
+            LandmarkList(
+                cityName: city.name,
+                country: city.country,
+                cachedLandmarks: $cachedLandmarks,
+                isLoadingLandmarks: $isLoadingLandmarks
+            )
             .tabItem {
                 Label("Places", systemImage: "map")
             }
             .tag(2)
-            .onChange(of: selectedTab) { oldValue, newValue in
-                if newValue != 2 {
-                    navigationPath.removeLast(navigationPath.count)
-                }
-            }
         }
         .navigationTitle(city.name)
         .navigationBarTitleDisplayMode(.inline)
