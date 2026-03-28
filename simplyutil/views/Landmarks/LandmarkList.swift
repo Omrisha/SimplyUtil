@@ -10,8 +10,10 @@ import SwiftUI
 struct LandmarkList: View {
     var cityName: String
     var country: String
-    @Binding var cachedLandmarks: [Landmark]?
-    @Binding var isLoadingLandmarks: Bool
+    
+    @State private var cachedLandmarks: [Landmark]?
+    @State private var isLoadingLandmarks = false
+    @State private var selectedLandmark: Landmark?
     
     var body: some View {
         List {
@@ -27,7 +29,9 @@ struct LandmarkList: View {
                         .foregroundColor(.secondary)
                 } else {
                     ForEach(Array(landmarks.enumerated()), id: \.offset) { index, landmark in
-                        NavigationLink(value: landmark) {
+                        Button {
+                            selectedLandmark = landmark
+                        } label: {
                             LandmarkRow(landmark: landmark)
                         }
                     }
@@ -38,6 +42,19 @@ struct LandmarkList: View {
             }
         }
         .navigationTitle("Landmarks")
+        .sheet(item: $selectedLandmark) { landmark in
+            NavigationStack {
+                LandmarkDetail(landmark: landmark)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button("Done") {
+                                selectedLandmark = nil
+                            }
+                        }
+                    }
+            }
+        }
         .task {
             // Only fetch if we don't have cached data
             if cachedLandmarks == nil {
@@ -61,13 +78,8 @@ struct LandmarkList: View {
 }
 
 #Preview {
-    @Previewable @State var landmarks: [Landmark]? = nil
-    @Previewable @State var isLoading = false
-    
     return LandmarkList(
         cityName: "London",
-        country: "England",
-        cachedLandmarks: $landmarks,
-        isLoadingLandmarks: $isLoading
+        country: "England"
     )
 }

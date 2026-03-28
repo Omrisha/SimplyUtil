@@ -13,7 +13,8 @@ struct Places: Hashable, Codable {
     let places: [Landmark]
 }
 
-struct Landmark: Hashable, Codable {
+struct Landmark: Hashable, Codable, Identifiable {
+    var id: String { formattedAddress + displayName.text }
     let formattedAddress: String
     let location: Location
     var locationCoordinates: CLLocationCoordinate2D {
