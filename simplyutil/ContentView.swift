@@ -63,9 +63,9 @@ struct ContentView: View {
                         .onDelete(perform: delete)
                     }
                     .listStyle(.insetGrouped)
-                    .searchable(text: $searchQuery, prompt: "Search cities or countries")
                 }
             }
+            .searchable(text: $searchQuery, prompt: "Search cities or countries")
             .navigationTitle("Favorite Places")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -116,8 +116,8 @@ struct ContentView: View {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: FavoriteEntity.self, configurations: config)
     let favorites = [
-        FavoriteEntity(id: 1, name: "Ramat Gan", threeLetterCode: "ISR", currency: "ILS", country: "Israel", isFavorite: true),
-        FavoriteEntity(id: 2, name: "Tel Aviv", threeLetterCode: "ISR", currency: "ILS", country: "Israel", isFavorite: true)
+        FavoriteEntity(cityId: 1, name: "Ramat Gan", threeLetterCode: "ISR", currency: "ILS", country: "Israel", isFavorite: true),
+        FavoriteEntity(cityId: 2, name: "Tel Aviv", threeLetterCode: "ISR", currency: "ILS", country: "Israel", isFavorite: true)
     ]
     favorites.forEach { container.mainContext.insert($0) }
     return ContentView().modelContainer(container)

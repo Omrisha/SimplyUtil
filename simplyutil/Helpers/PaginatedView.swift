@@ -62,7 +62,7 @@ struct PaginatedView<Content: View>: View {
                             .init(\.name)
                         ]
                     )
-                    let totalCount = try modelContext.fetchCount(fetchDescriptor)
+                    _ = try modelContext.fetchCount(fetchDescriptor)
                     fetchDescriptor.fetchLimit = itemPerPage
                     let newData = try modelContext.fetch(fetchDescriptor)
                     cities = newData

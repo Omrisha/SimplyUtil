@@ -14,7 +14,8 @@ struct simplyutilApp: App {
         
     init() {
         do {
-            modelContainer = try ModelContainer(for: FavoriteEntity.self, CityEntity.self)
+            // Only store FavoriteEntity now - cities are fetched directly from API
+            modelContainer = try ModelContainer(for: FavoriteEntity.self)
         } catch {
             fatalError("Could not initialize ModelContainer")
         }
@@ -23,9 +24,6 @@ struct simplyutilApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .task {
-                    await WebService().updateDataInDatabase(modelContext:   modelContainer.mainContext)
-                }
         }
         .modelContainer(modelContainer)
     }

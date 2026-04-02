@@ -11,15 +11,18 @@ import SwiftData
 @Model
 @available(iOS 17, *)
 class FavoriteEntity {
-    @Attribute(.unique) var id: Int
+    // Use a UUID as the unique identifier, not the city's API id
+    @Attribute(.unique) var uniqueId: UUID
+    var cityId: Int  // Store the original city ID for reference
     var name: String
     var threeLetterCode: String
     var currency: String
     var country: String
     var isFavorite: Bool
     
-    init(id: Int, name: String, threeLetterCode: String, currency: String, country: String, isFavorite: Bool) {
-        self.id = id
+    init(cityId: Int, name: String, threeLetterCode: String, currency: String, country: String, isFavorite: Bool) {
+        self.uniqueId = UUID()  // Generate a new UUID for each favorite
+        self.cityId = cityId
         self.name = name
         self.threeLetterCode = threeLetterCode
         self.currency = currency
@@ -29,7 +32,7 @@ class FavoriteEntity {
     
     convenience init(item: CityDTO) {
         self.init(
-            id: item.id,
+            cityId: item.id,
             name: item.name,
             threeLetterCode: item.threeLetterCode,
             currency: item.currency,

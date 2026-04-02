@@ -40,6 +40,71 @@ class UnifiedAPIClient {
         return citiesResponse.cities
     }
     
+    /// Fetches cities with pagination
+    func fetchCities(page: Int, pageSize: Int, searchQuery: String = "") async throws -> ServerCitiesResponse {
+        var components = URLComponents(string: "\(baseURL)/cities")!
+        components.queryItems = [
+            URLQueryItem(name: "page", value: String(page)),
+            URLQueryItem(name: "pageSize", value: String(pageSize))
+        ]
+        
+        if !searchQuery.isEmpty {
+            components.queryItems?.append(URLQueryItem(name: "search", value: searchQuery))
+        }
+        
+        guard let url = components.url else {
+            print("❌ Bad URL: \(baseURL)/cities")
+            throw URLError(.badURL)
+        }
+        
+        print("🏙️ Fetching cities from: \(url.absoluteString)")
+        
+        let (data, response) = try await URLSession.shared.data(from: url)
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            print("❌ Invalid HTTP response")
+            throw URLError(.badServerResponse)
+        }
+        
+        print("🏙️ HTTP Status: \(httpResponse.statusCode)")
+        
+        guard httpResponse.statusCode == 200 else {
+            if let errorString = String(data: data, encoding: .utf8) {
+                print("❌ Server error response: \(errorString)")
+            }
+            throw URLError(.badServerResponse)
+        }
+        
+        // Debug: Print raw response
+        if let jsonString = String(data: data, encoding: .utf8) {
+            print("🏙️ Response preview: \(jsonString.prefix(200))...")
+        }
+        
+        let decoder = JSONDecoder()
+        do {
+            let citiesResponse = try decoder.decode(ServerCitiesResponse.self, from: data)
+            print("✅ Successfully decoded \(citiesResponse.cities.count) cities")
+            return citiesResponse
+        } catch {
+            print("❌ Decoding error: \(error)")
+            if let decodingError = error as? DecodingError {
+                switch decodingError {
+                case .keyNotFound(let key, let context):
+                    print("   Missing key: \(key.stringValue) at \(context.codingPath)")
+                case .typeMismatch(let type, let context):
+                    print("   Type mismatch: expected \(type) at \(context.codingPath)")
+                case .valueNotFound(let type, let context):
+                    print("   Value not found: \(type) at \(context.codingPath)")
+                case .dataCorrupted(let context):
+                    print("   Data corrupted at: \(context.codingPath)")
+                @unknown default:
+                    print("   Unknown decoding error")
+                }
+            }
+            throw error
+        }
+    }
+    
     // MARK: - Landmarks
     
     /// Fetches landmarks for a city

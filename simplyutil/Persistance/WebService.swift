@@ -54,44 +54,21 @@ class WebService {
     }
     
     @MainActor
-    func createModelInDatabase(item: CityEntity, modelContext: ModelContext) async {
+    func createModelInDatabase(item: CityDTO, modelContext: ModelContext) async {
         do {
             try modelContext.transaction {
-                let favorite = FavoriteEntity(id: item.id, name: item.name, threeLetterCode: item.threeLetterCode, currency: item.currency, country: item.country, isFavorite: true)
+                let favorite = FavoriteEntity(
+                    cityId: item.id,
+                    name: item.name,
+                    threeLetterCode: item.threeLetterCode,
+                    currency: item.currency,
+                    country: item.country,
+                    isFavorite: true
+                )
                 modelContext.insert(favorite)
             }
         } catch {
-            print("Error fetching data")
-            print(error.localizedDescription)
-        }
-    }
-    
-    @MainActor
-    func updateDataInDatabase(modelContext: ModelContext)  async {
-        do {
-            var citiesDescriptor = FetchDescriptor<CityEntity>()
-            citiesDescriptor.fetchLimit = 1
-            
-            let persistedCities = try modelContext.fetch(citiesDescriptor)
-            
-            if persistedCities.isEmpty {
-                print("Update database from server")
-                do {
-                    let itemData: [CityDTO] = try await apiClient.fetchCities()
-                    print("Successfully fetched \(itemData.count) cities from server")
-                    
-                    for eachItem in itemData {
-                        let itemToStore = CityEntity(item: eachItem)
-                        modelContext.insert(itemToStore)
-                    }
-                } catch {
-                    print("Error fetching cities from server:")
-                    print(error.localizedDescription)
-                    throw error
-                }
-            }
-        } catch {
-            print("Error updating database")
+            print("Error adding favorite")
             print(error.localizedDescription)
         }
     }

@@ -54,13 +54,9 @@ struct SwipableCard: View {
 }
 
 #Preview {
-    do {
-        let favorite = FavoriteEntity(id: 1, name: "Ramat Gan", threeLetterCode: "ISR", currency: "ILS", country: "Israel", isFavorite: true)
-        return SwipableCard(item: favorite, customAction: {
-            print("Delete")
-        }, cardView: CityRow(cityData: favorite))
-    } catch {
-        fatalError("Failed to create model container")
-    }
+    let favorite = FavoriteEntity(cityId: 1, name: "Ramat Gan", threeLetterCode: "ISR", currency: "ILS", country: "Israel", isFavorite: true)
+    SwipableCard(item: favorite, customAction: {
+        print("Delete")
+    }, cardView: CityRow(cityData: favorite))
 }
 

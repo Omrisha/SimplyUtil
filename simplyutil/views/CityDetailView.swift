@@ -55,10 +55,6 @@ struct CityDetailView: View {
 }
 
 #Preview {
-    do {
-        let favorite2 = FavoriteEntity(id: 1, name: "Rishon LeZion", threeLetterCode: "ISR", currency: "ILS", country: "Israel", isFavorite: true)
-        return CityDetailView(city: favorite2)
-    } catch {
-        fatalError("Failed to create model container")
-    }
+    let favorite2 = FavoriteEntity(cityId: 1, name: "Rishon LeZion", threeLetterCode: "ISR", currency: "ILS", country: "Israel", isFavorite: true)
+    return CityDetailView(city: favorite2)
 }
