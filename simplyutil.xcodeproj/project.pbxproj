@@ -194,15 +194,23 @@
 			path = Persistance;
 			sourceTree = "<group>";
 		};
+		B286C9972F7F03BC002646C5 /* docs */ = {
+			isa = PBXGroup;
+			children = (
+				B286C9952F7F0144002646C5 /* docs_config.yml */,
+				B286C9942F7F013F002646C5 /* docsindex.md */,
+			);
+			path = docs;
+			sourceTree = "<group>";
+		};
 		B2B6E59327301B8000D30397 = {
 			isa = PBXGroup;
 			children = (
+				B286C9972F7F03BC002646C5 /* docs */,
 				B2B6E59E27301B8000D30397 /* simplyutil */,
 				B2B6E5AF27301B8100D30397 /* simplyutilTests */,
 				B2B6E5B927301B8100D30397 /* simplyutilUITests */,
 				B2B6E59D27301B8000D30397 /* Products */,
-				B286C9942F7F013F002646C5 /* docsindex.md */,
-				B286C9952F7F0144002646C5 /* docs_config.yml */,
 			);
 			sourceTree = "<group>";
 		};
