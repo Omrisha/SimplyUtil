@@ -91,6 +91,8 @@
 		B211ABD32BB5EC090083A054 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		B21DA3AE2BD2C7C900557B7A /* PaginatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginatedView.swift; sourceTree = "<group>"; };
 		B25BCD8F2BE145BA00F6A3D6 /* ForecastRowCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForecastRowCell.swift; sourceTree = "<group>"; };
+		B286C9942F7F013F002646C5 /* docsindex.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = docsindex.md; sourceTree = "<group>"; };
+		B286C9952F7F0144002646C5 /* docs_config.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = docs_config.yml; sourceTree = "<group>"; };
 		B299AE2E2BAB6158009A6D8D /* WeatherDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDTO.swift; sourceTree = "<group>"; };
 		B299AE322BACAD91009A6D8D /* AsyncButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncButton.swift; sourceTree = "<group>"; };
 		B299AE342BACB9DA009A6D8D /* URLSessionExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionExtensions.swift; sourceTree = "<group>"; };
@@ -199,6 +201,8 @@
 				B2B6E5AF27301B8100D30397 /* simplyutilTests */,
 				B2B6E5B927301B8100D30397 /* simplyutilUITests */,
 				B2B6E59D27301B8000D30397 /* Products */,
+				B286C9942F7F013F002646C5 /* docsindex.md */,
+				B286C9952F7F0144002646C5 /* docs_config.yml */,
 			);
 			sourceTree = "<group>";
 		};
